@@ -1,6 +1,6 @@
 # UberGen LAMP3 System Generation Suite
 
-##	Description:
+##	Description
 	Sets up a LAMP3(w) Environment by installing and configuring ...
 		* Linux
 		* Apache
@@ -52,7 +52,7 @@
 	Debian 10.x (xfce,GNOME,kde desktops)
 	Ubuntu Workstation 20.x
 
-##	Component Scripts:
+##	Component Scripts
 	build-variables             Driving data
 	perl-install                Perl Language and handy libraries
 	php-install                 PHP Language and handy libraries
@@ -70,7 +70,7 @@
 	wordpress-mariadb-config    WordPresss database configuration
 	wordpress-install           WordPresss installation
 
-##	Usage:
+##	Usage
 ubergen.sh [-l] [-v] [-d] [-t] [-u] [-p] [-W]
 
 	Options:
@@ -81,9 +81,10 @@ ubergen.sh [-l] [-v] [-d] [-t] [-u] [-p] [-W]
 	   -v            Verbose (displays detailed info)
 	   -d            Debug (displays more detailed info)
 	   -t            Trace (displays exhaustive info)
-
-## Copyright:
+	   
+## Copyright
 Copyright (c) 2021, Kurt Schulte - All rights reserved.  No use without written authorization.
 
-## Contact:
+## Contact
 For licensing and questions, contact Kurt Schulte @ cognogistics-at-gmail-dot-com
+

@@ -117,7 +117,7 @@ getOptions() {
 			P)  optDistroPass=$OPTARG								;;
 			p)	optPrompt=1                                         ;;
 			l)	optLog=1                                            ;;
-			L)  optLogFile=$OPTARG ; optLog=1						;;
+			L)  optLogFile="${OPTARG//\"/}" ; optLog=1				;;
 			v)  optVerbose=1 ; optLog=1                             ;;
 			d)  optDebug=1 ;   optVerbose=1 ; optLog=1              ;;
 			t)  optTrace=1; optDebug=1 ;   optVerbose=1 ; optLog=1  ;;
