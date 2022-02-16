@@ -115,7 +115,7 @@ LogInitialize() {
 	# Determine and validate log file location, then initialize
 	if [ $logOption ] ; then
 		[ "${logFile}" == "" ] && logFile="${default_log_file//\/\//\/}"			# Use default log file spec, if none provided
-		[ -f "${logFile}" ] && [[ "${logAppend}" != *[Yy]* ]] && rm "${logFile}"	# Remove old log
+		[ -f "${logFile}" ] && [[ "${logAppend}" != *[Yy1]* ]] && rm "${logFile}"	# Remove old log
 		touch "${logFile}"															# Initialize log file
 		[ $? -ne 0 ] && barfee "Can't access log file (logFile=${logFile})"
 		optLogFile="${logFile}"
