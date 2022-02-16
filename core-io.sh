@@ -114,9 +114,9 @@ LogInitialize() {
 	
 	# Determine and validate log file location, then initialize
 	if [ $logOption ] ; then
-		[ "${logFile}" == "" ] && logFile="${default_log_file//\/\//\/}"		# Use default log file spec, if none provided
-		[ -f "${logFile}" ] && [[ "${logAppend}" -ne *[Yy]* ]] && rm "${logFile}"	# Remove old log
-		touch "${logFile}"														# Initialize log file
+		[ "${logFile}" == "" ] && logFile="${default_log_file//\/\//\/}"			# Use default log file spec, if none provided
+		[ -f "${logFile}" ] && [[ "${logAppend}" != *[Yy]* ]] && rm "${logFile}"	# Remove old log
+		touch "${logFile}"															# Initialize log file
 		[ $? -ne 0 ] && barfee "Can't access log file (logFile=${logFile})"
 		optLogFile="${logFile}"
 	fi
@@ -135,7 +135,7 @@ LogStamp() {
 	[ $(echo "${text}" | grep -c '^[0-9]\{4\}[.][0-9]\{2\}[.][0-9]\{2\}') -eq 0 ] &&
 		logText="${currTS}: ${text}"
 
-	printf "%s" "${logText}"
+	printf "%s\n" "${logText}"
 }
 
 CatStamp() {

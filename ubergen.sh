@@ -132,12 +132,11 @@ getOptions() {
 	LogInitialize "${optLog}" "${optLogFile}"
 
 	# Set option switches for downstream script calls
-	logSwitch=		; [ $optLog ] && 		logSwitch="-l"			;
-	debugSwitch=	; [ $optDebug ] && 		debugSwitch="-d"		;
-	verboseSwitch=	; [ $optVerbose ] && 	verboseSwitch="-v"		;
-	traceSwitch=	; [ $optTrace ] &&		traceSwitch="-t"		;
-	logFileSwitch=	; [ "${optLogFile}" != "" ] && logFileSwitch='-L "'"${optLogFile}"'"'
-	optSwitches="${logSwitch} ${logFileSwitch} ${verboseSwitch} ${debugSwitch} ${traceSwitch}"
+	logFlag=		; [ $optLog ] && 		logFlag="-l"			;
+	debugFlag=	; [ $optDebug ] && 		debugFlag="-d"		;
+	verboseFlag=	; [ $optVerbose ] && 	verboseFlag="-v"		;
+	traceFlag=	; [ $optTrace ] &&		traceFlag="-t"		;
+	logFileFlag=	; [ "${optLogFile}" != "" ] && logFileFlag='-L "'"${optLogFile}"'"'
 }
 
 usage() {
@@ -169,28 +168,28 @@ cd "${scriptFolder}"
 
 UnpackDistro									# Unpack UberGen distribution
 if [ ! $optUnpack ] ; then
-	osw="${optSwitches}"
+
 	barf "##"
 	barf "## UberGen System Build - Start"
 	barf "##"
-	./prerequisites-install.sh		$osw		# Prerequisites
-	./perl-install.sh				$osw		# Perl Language
-	./php-install.sh				$osw		# PHP Language
-	./python-install.sh				$osw		# Python Language
-	./system-hosts.sh				$osw		# System hosts file, configure with region servers
-	./firewall-install.sh			$osw		# Firewall (UFW)
-	./openssl-config.sh Create		$osw		# OpenSSL certificate generation and configuration
-	./system-add-users.sh			$osw		# System users, groups, and support scripts [must come after SSL]
-	./openssh-install.sh			$osw		# OpenSSH server install and configuration
-	./mariadb-install.sh			$osw		# Database (MariaDB)
-	./brave-install.sh				$osw		# Brave privacy web browser
-	./vsftp-install.sh				$osw		# Secure FTP Server (VSFTP) install and configure
-	./vnc-install.sh				$osw		# TigerVNC Remote Desktop Server install and configure
-	./apache-install.sh				$osw		# Apache Web Server install and configure
+	./prerequisites-install.sh		$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Prerequisites
+	./perl-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Perl Language
+	./php-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# PHP Language
+	./python-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Python Language
+	./system-hosts.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# System hosts file, configure with region servers
+	./firewall-install.sh			$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Firewall (UFW)
+	./openssl-config.sh Create		$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# OpenSSL certificate generation and configuration
+	./system-add-users.sh			$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# System users, groups, and support scripts [must come after SSL]
+	./openssh-install.sh			$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# OpenSSH server install and configuration
+	./mariadb-install.sh			$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Database (MariaDB)
+	./brave-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Brave privacy web browser
+	./vsftp-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Secure FTP Server (VSFTP) install and configure
+	./vnc-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# TigerVNC Remote Desktop Server install and configure
+	./apache-install.sh				$logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag		# Apache Web Server install and configure
 	if [ $optWordPress ] ; then
-		./wordpress-mariadb-config.sh	 $osw	# Create WordPress database(s) and users
-		./wordpress-mariadb-config.sh -O $osw	# Permission WordPress database objects
-		./wordpress-install.sh			 $osw	# Install WordPress software
+		./wordpress-mariadb-config.sh	 $logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag	# Create WordPress database(s) and users
+		./wordpress-mariadb-config.sh -O $logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag	# Permission WordPress database objects
+		./wordpress-install.sh			 $logFlag $logFileFlag $verboseFlag $debugFlag $traceFlag	# Install WordPress software
 	fi
 	barf "#"
 	barf "## UberGen System Build - End"
