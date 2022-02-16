@@ -180,7 +180,7 @@ if [ ! $optUnpack ] ; then
 	./python-install.sh				$flags			# Python Language
 	./system-hosts.sh				$flags			# System hosts file, configure with region servers
 	./firewall-install.sh			$flags			# Firewall (UFW)
-	./openssl-config.sh Create		$flags			# OpenSSL certificate generation and configuration
+	./openssl-config.sh $flags Create				# OpenSSL certificate generation and configuration
 	./system-add-users.sh			$flags			# System users, groups, and support scripts [must come after SSL]
 	./openssh-install.sh			$flags			# OpenSSH server install and configuration
 	./mariadb-install.sh			$flags			# Database (MariaDB)
