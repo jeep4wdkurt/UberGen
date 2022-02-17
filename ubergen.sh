@@ -171,7 +171,7 @@ cd "${scriptFolder}"
 UnpackDistro									# Unpack UberGen distribution
 if [ ! $optUnpack ] ; then
 
-	local uberModules
+	uberModules
 	uberModules="prerequisites-install"					# Prerequisites
 	uberModules="${uberModules},perl-install"			# Perl Language
 	uberModules="${uberModules},php-install"			# PHP Language
@@ -191,13 +191,13 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects
 	uberModules="${uberModules},WP:wordpress-install"			# Install WordPress software
 
-	local commandFlags="${logAppendFlag} ${logFlag} ${logFileFlag} ${verboseFlag} ${debugFlag} ${traceFlag}"
+	commandFlags="${logAppendFlag} ${logFlag} ${logFileFlag} ${verboseFlag} ${debugFlag} ${traceFlag}"
 
 	barf "##"
 	barf "## UberGen System Build - Start"
 	barf "##"
 
-	local moduleInfo
+	moduleInfo
 	
 	while read moduleInfo ; do
 		local moduleName="${moduleInfo}"
@@ -229,6 +229,7 @@ if [ ! $optUnpack ] ; then
 		[ $moduleWpOnly ] && [ ! $optWordPress ] && moduleInstallNeeded=
 
 		# Install module
+		barfd "Install module '${moduleName}',installNeeded=${moduleInstallNeeded}"
 		if [ $moduleInstallNeeded ] ; then
 			"${moduleScript}" $moduleFlags $commandFlags $moduleParams
 			errCode=$? ; [ $errCode -ne 0 ] && "Error executing UberGen module '${moduleName}', err=${errCode}"
