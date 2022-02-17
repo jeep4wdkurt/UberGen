@@ -200,11 +200,11 @@ if [ ! $optUnpack ] ; then
 	moduleInfo
 	
 	while read moduleInfo ; do
-		local moduleName="${moduleInfo}"
-		local moduleParams=""
-		local moduleFlags=""
-		local moduleWpOnly=
-		local moduleInstallNeeded=1
+		moduleName="${moduleInfo}"
+		moduleParams=""
+		moduleFlags=""
+		moduleWpOnly=
+		moduleInstallNeeded=1
 		
 		# Get WP-Only flag, if any
 		if [ "${moduleName:0:3}" == "WP:" ] ; then
@@ -215,7 +215,7 @@ if [ ! $optUnpack ] ; then
 		# Get module options and params, if any
 		if [ "${moduleInfo// /}" != "${moduleInfo}" ] ; then
 			moduleName="${moduleInfo%% *}"
-			local moduleTags="${moduleInfo##* }"
+			moduleTags="${moduleInfo##* }"
 			[ "${moduleTags// /}" != "${moduleTags}" ] && barfe "Ubergen Module '${moduleName}' has multiple params/options. Codefix needed"
 			if [ "${moduleTags:0:1}" == "-" ] ; then
 				moduleFlags="${moduleTags}"
@@ -223,7 +223,7 @@ if [ ! $optUnpack ] ; then
 				moduleParams="${moduleTags}"
 			fi
 		fi
-		local moduleScript="${scriptFolder}/${moduleName}.sh"
+		moduleScript="${scriptFolder}/${moduleName}.sh"
 		
 		# Determine if module should be installed
 		[ $moduleWpOnly ] && [ ! $optWordPress ] && moduleInstallNeeded=
