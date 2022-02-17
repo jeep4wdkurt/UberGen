@@ -48,6 +48,7 @@
 #
 #	History:
 #       Date        Version  Author         Desc
+#       2022.02.17  01.04    KurtSchulte    Logging updates, bug fixes
 #       2021.04.29  01.03    KurtSchulte    Core routines
 #       2021.01.28  01.00    KurtSchulte    Original Version
 #
@@ -130,11 +131,11 @@ getOptions() {
 	[ $optTrace ] && verboseFlag=-v
 
 	# Set option switches for downstream script calls
-	logAppendFlag=	; 
-	logFlag=	; 		[ $optLog ] && 		{ logFlag="-l" ; logAppendFlag="-a" ; }
 	debugFlag=	; 		[ $optDebug ] && 	debugFlag="-d"		;
 	verboseFlag= ;		[ $optVerbose ] && 	verboseFlag="-v"	;
 	traceFlag= ; 		[ $optTrace ] &&	traceFlag="-t"		;
+	logAppendFlag=	; 
+	logFlag=	; 		[ $optLog ] && 		{ logFlag="-l" ; logAppendFlag="-a" ; }
 	logFileFlag= ;		[ "${optLogFile}" != "" ] && logFileFlag='-L"'"${optLogFile}"'"'
 
 	LogInitialize "${optLog}" "${optLogFile}" "${optLogAppend}"
@@ -170,29 +171,71 @@ cd "${scriptFolder}"
 UnpackDistro									# Unpack UberGen distribution
 if [ ! $optUnpack ] ; then
 
+	local uberModules
+	uberModules="prerequisites-install"					# Prerequisites
+	uberModules="${uberModules},perl-install"			# Perl Language
+	uberModules="${uberModules},php-install"			# PHP Language
+	uberModules="${uberModules},python-install"			# Python Language
+	uberModules="${uberModules},system-hosts"			# System hosts file, configure with region servers
+	uberModules="${uberModules},firewall-install"		# Firewall (UFW)
+	uberModules="${uberModules},openssl-config Create"	# OpenSSL certificate generation and configuration
+	uberModules="${uberModules},system-add-users"		# System users, groups, and support scripts [must come after SSL]
+	uberModules="${uberModules},openssh-install"		# OpenSSH server install and configuration
+	uberModules="${uberModules},mariadb-install"		# Database (MariaDB)
+	uberModules="${uberModules},brave-install"			# Brave privacy web browser
+	uberModules="${uberModules},vsftp-install"			# Secure FTP Server (VSFTP) install and configure
+	uberModules="${uberModules},vnc-install"			# TigerVNC Remote Desktop Server install and configure
+	uberModules="${uberModules},apache-install"			# Apache Web Server install and configure
+
+	uberModules="${uberModules},WP:wordpress-mariadb-config"	# Create WordPress database(s) and users
+	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects
+	uberModules="${uberModules},WP:wordpress-install"			# Install WordPress software
+
+	local commandFlags="${logAppendFlag} ${logFlag} ${logFileFlag} ${verboseFlag} ${debugFlag} ${traceFlag}"
+
 	barf "##"
 	barf "## UberGen System Build - Start"
 	barf "##"
-	flags="${logAppendFlag} ${logFlag} ${logFileFlag} ${verboseFlag} ${debugFlag} ${traceFlag}"
-	./prerequisites-install.sh		$flags			# Prerequisites
-	./perl-install.sh				$flags			# Perl Language
-	./php-install.sh				$flags			# PHP Language
-	./python-install.sh				$flags			# Python Language
-	./system-hosts.sh				$flags			# System hosts file, configure with region servers
-	./firewall-install.sh			$flags			# Firewall (UFW)
-	./openssl-config.sh $flags Create				# OpenSSL certificate generation and configuration
-	./system-add-users.sh			$flags			# System users, groups, and support scripts [must come after SSL]
-	./openssh-install.sh			$flags			# OpenSSH server install and configuration
-	./mariadb-install.sh			$flags			# Database (MariaDB)
-	./brave-install.sh				$flags			# Brave privacy web browser
-	./vsftp-install.sh				$flags			# Secure FTP Server (VSFTP) install and configure
-	./vnc-install.sh				$flags			# TigerVNC Remote Desktop Server install and configure
-	./apache-install.sh				$flags			# Apache Web Server install and configure
-	if [ $optWordPress ] ; then
-		./wordpress-mariadb-config.sh	 $flags		# Create WordPress database(s) and users
-		./wordpress-mariadb-config.sh -O $flags		# Permission WordPress database objects
-		./wordpress-install.sh			 $flags		# Install WordPress software
-	fi
+
+	local moduleInfo
+	
+	while read moduleInfo ; do
+		local moduleName="${moduleInfo}"
+		local moduleParams=""
+		local moduleFlags=""
+		local moduleWpOnly=
+		local moduleInstallNeeded=1
+		
+		# Get WP-Only flag, if any
+		if [ "${moduleName:0:3}" == "WP:" ] ; then
+			moduleName="${moduleName:3}"
+			moduleWpOnly=1
+		fi
+		
+		# Get module options and params, if any
+		if [ "${moduleInfo// /}" != "${moduleInfo}" ] ; then
+			moduleName="${moduleInfo%% *}"
+			local moduleTags="${moduleInfo##* }"
+			[ "${moduleTags// /}" != "${moduleTags}" ] && barfe "Ubergen Module '${moduleName}' has multiple params/options. Codefix needed"
+			if [ "${moduleTags:0:1}" == "-" ] ; then
+				moduleFlags="${moduleTags}"
+			else
+				moduleParams="${moduleTags}"
+			fi
+		fi
+		local moduleScript="${scriptFolder}/${moduleName}.sh"
+		
+		# Determine if module should be installed
+		[ $moduleWpOnly ] && [ ! $optWordPress ] && moduleInstallNeeded=
+
+		# Install module
+		if [ $moduleInstallNeeded ] ; then
+			"${moduleScript}" $moduleFlags $commandFlags $moduleParams
+			errCode=$? ; [ $errCode -ne 0 ] && "Error executing UberGen module '${moduleName}', err=${errCode}"
+		fi
+
+	done < <(printf "%s," "${uberModules}" | tr ',' '\n')
+	
 	barf "#"
 	barf "## UberGen System Build - End"
 	barf "#"
