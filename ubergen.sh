@@ -101,6 +101,7 @@ getOptions() {
 	optLog=
 	optLogAppend=
 	optLogFile=
+	optLogSeparate=
 	optVerbose=
 	optDebug=
 	optTrace=
@@ -109,7 +110,7 @@ getOptions() {
 	optWordPress=
 	optPrompt=
 
-	while getopts "?hlL:vdtupP:W" OPTION
+	while getopts "?hlL:vdtupP:WaS" OPTION
 	do
 		case $OPTION in
 			h)	usage ; exit 1                                      ;;
@@ -118,9 +119,11 @@ getOptions() {
 			P)  optDistroPass=$OPTARG								;;
 			p)	optPrompt=1                                         ;;
 			l)	optLog=1                                            ;;
+			a)	optLogAppend=1                                      ;;
+			S)	optLogSeparate=1                                    ;;
 			L)  optLogFile="${OPTARG//\"/}" ; optLog=1				;;
 			v)  optVerbose=1 ; optLog=1                             ;;
-			d)  optDebug=1 ;   optVerbose=1 ; optLog=1              ;;
+			d)  optDebug=1 ; optVerbose=1 ; optLog=1                ;;
 			t)  optTrace=1; optDebug=1 ;   optVerbose=1 ; optLog=1  ;;
 			?)  usage ; exit                                        ;;
 		 esac
@@ -131,14 +134,18 @@ getOptions() {
 	[ $optTrace ] && verboseFlag=-v
 
 	# Set option switches for downstream script calls
-	debugFlag=	; 		[ $optDebug ] && 	debugFlag="-d"		;
-	verboseFlag= ;		[ $optVerbose ] && 	verboseFlag="-v"	;
-	traceFlag= ; 		[ $optTrace ] &&	traceFlag="-t"		;
-	logAppendFlag=	; 
-	logFlag=	; 		[ $optLog ] && 		{ logFlag="-l" ; logAppendFlag="-a" ; }
+	[ $optLogSeparate ] && optLogAppend=
+	debugFlag=	; 		[ $optDebug ] && 		debugFlag="-d"		;
+	verboseFlag= ;		[ $optVerbose ] && 		verboseFlag="-v"	;
+	traceFlag= ; 		[ $optTrace ] &&		traceFlag="-t"		;
+	logAppendFlag=	; 	[ $optLogAppend ] &&	logAppendFlag="-a" ;
+	logFlag=	; 		[ $optLog ] && 			logFlag="-l" ;
 	logFileFlag= ;		[ "${optLogFile}" != "" ] && logFileFlag='-L"'"${optLogFile}"'"'
 
 	LogInitialize "${optLog}" "${optLogFile}" "${optLogAppend}"
+	
+	[ $optLog ] && logAppendFlag="-a"			# Cause child modules to append to this log
+	
 
 }
 
@@ -191,15 +198,18 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects
 	uberModules="${uberModules},WP:wordpress-install"			# Install WordPress software
 
-	commandFlags="${logAppendFlag} ${logFlag} ${logFileFlag} ${verboseFlag} ${debugFlag} ${traceFlag}"
+	commandDebugFlags="${verboseFlag} ${debugFlag} ${traceFlag}"
+	commandLogFlags="${logAppendFlag} ${logFlag} ${logFileFlag}"
 
 	barf "##"
 	barf "## UberGen System Build - Start"
 	barf "##"
 
 	moduleInfo
+	moduleCt=0
 	
 	while read moduleInfo ; do
+		moduleCt=$(( $moduleCt + 1 ))
 		moduleName="${moduleInfo}"
 		moduleParams=""
 		moduleFlags=""
@@ -231,7 +241,19 @@ if [ ! $optUnpack ] ; then
 		# Install module
 		barfd "Install module '${moduleName}',installNeeded=${moduleInstallNeeded}"
 		if [ $moduleInstallNeeded ] ; then
-			"${moduleScript}" $moduleFlags $commandFlags $moduleParams
+		
+			# determine log file name, if logging separately
+			if [ $optLogSeparate ] ; then
+				logFolder="."
+				[ "${optLogFile//\//}" != "${optLogFile}" ] && logFolder="${optLogFile%/*}"
+				logNumber=$(printf "%02d" "${moduleCt}")
+				logFileSeparate="${logFolder}/ubergen-${logNumber}-${moduleName}.log"
+				logFileFlag='-L"'"${logFileSeparate}"'"'
+				commandLogFlags="${logAppendFlag} ${logFlag} ${logFileFlag}"
+			fi
+		
+			# Run module script
+			"${moduleScript}" $moduleFlags $commandDebugFlags $commandLogFlags $moduleParams
 			errCode=$? ; [ $errCode -ne 0 ] && "Error executing UberGen module '${moduleName}', err=${errCode}"
 		fi
 
