@@ -256,9 +256,9 @@ if [ ! $optUnpack ] ; then
 			"${moduleScript}" $moduleFlags $commandDebugFlags $commandLogFlags $moduleParams
 			errCode=$? ; [ $errCode -ne 0 ] && "Error executing UberGen module '${moduleName}', err=${errCode}"
 			
-			if [ $moduleCt -eq 6 ] ; then
-				read -p "OK2GO?: " ok2goAns </dev/tty
-			fi
+			#if [ $moduleCt -eq 6 ] ; then
+			#	read -p "OK2GO?: " ok2goAns </dev/tty
+			#fi
 			
 		fi
 
