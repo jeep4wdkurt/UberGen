@@ -110,7 +110,7 @@ LogInitialize() {
 	local logAppend=$3
 	progLabel="LogInitialize"
 
-	local default_log_file="$(pwd)/ubergen.log" ; default_log_file="${default_log_file//\/\//\/}"
+	local default_log_file="$(pwd)/ubergen.log" ; default_log_file="${default_log_file//\/\/ub/\/ub}"
 	
 	# Determine and validate log file location, then initialize
 	if [ "${logOption}" == "1" ] ; then
@@ -120,7 +120,7 @@ LogInitialize() {
 		[ $? -ne 0 ] && barfee "Can't access log file (logFile=${logFile})"
  		optLogFile="${logFile}"	; export optLogFile
 	fi
-	barft "${LogInitialize}:logFile='${logFile}'"
+	##barft "${LogInitialize}:logFile='${logFile}'"
 }
 
 LogCapture() {
