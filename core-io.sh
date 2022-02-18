@@ -118,7 +118,7 @@ LogInitialize() {
 		[ -f "${logFile}" ] && [[ "${logAppend}" != *[Yy1]* ]] && rm "${logFile}"	# Remove old log
 		touch "${logFile}"															# Initialize log file
 		[ $? -ne 0 ] && barfee "Can't access log file (logFile=${logFile})"
-		optLogFile="${logFile}"
+ 		optLogFile="${logFile}"	; export optLogFile
 	fi
 	barft "${LogInitialize}:logFile='${logFile}'"
 }
