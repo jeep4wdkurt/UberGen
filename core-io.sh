@@ -120,7 +120,7 @@ LogInitialize() {
 		[ $? -ne 0 ] && barfee "Can't access log file (logFile=${logFile})"
  		optLogFile="${logFile}"	; export optLogFile
 	fi
-	##barft "${LogInitialize}:logFile='${logFile}'"
+	##barft "${LogInitialize}:logFile='${logFile}'"   ## OUTPUT in this rourtine explodes stuff.
 }
 
 LogCapture() {
