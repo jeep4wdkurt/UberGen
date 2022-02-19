@@ -267,3 +267,5 @@ if [ ! $optUnpack ] ; then
 	barf "## UberGen System Build - End"
 	barf "#"
 fi
+
+exit 0
