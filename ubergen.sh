@@ -178,7 +178,6 @@ cd "${scriptFolder}"
 UnpackDistro									# Unpack UberGen distribution
 if [ ! $optUnpack ] ; then
 
-	uberModules
 	uberModules="prerequisites-install"					# Prerequisites
 	uberModules="${uberModules},perl-install"			# Perl Language
 	uberModules="${uberModules},php-install"			# PHP Language
