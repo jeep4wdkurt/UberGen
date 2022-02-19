@@ -204,7 +204,6 @@ if [ ! $optUnpack ] ; then
 	barf "## UberGen System Build - Start"
 	barf "##"
 
-	moduleInfo
 	moduleCt=0
 	
 	while read moduleInfo ; do
