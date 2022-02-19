@@ -254,7 +254,7 @@ if [ ! $optUnpack ] ; then
 		
 			# Run module script
 			"${moduleScript}" $moduleFlags $commandDebugFlags $commandLogFlags $moduleParams
-			errCode=$? ; [ $errCode -ne 0 ] && "Error executing UberGen module '${moduleName}', err=${errCode}"
+			errCode=$? ; [ $errCode -ne 0 ] && barfe "Error executing UberGen module '${moduleName}', err=${errCode}"
 			
 			if [ $moduleCt -eq 99 ] ; then
 				read -p "OK2GO?: " ok2goAns </dev/tty
