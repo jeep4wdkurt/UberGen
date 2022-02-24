@@ -48,7 +48,7 @@
 #
 #	History:
 #       Date        Version  Author         Desc
-#       2022.02.17  01.04    KurtSchulte    Logging updates, bug fixes
+#       2022.02.17  01.04    KurtSchulte    Logging updates, bug fixes, cross-reboot opertation
 #       2021.04.29  01.03    KurtSchulte    Core routines
 #       2021.01.28  01.00    KurtSchulte    Original Version
 #
@@ -80,7 +80,7 @@ UnpackDistro() {
 			if [ ! $optYes ] ; then
 				local ans
 				while [[ "${ans}" != *[YyNn]* ]] ; do
-					read -p "UberGen is already installed.  Overwrite? [Y/N]: " /dev/tty
+					read -p "UberGen is already installed.  Overwrite? [Y/N]: " ans </dev/tty
 				done
 				[[ "${ans}" == *[Yy]* ]] && doUnpack=1
 			fi
