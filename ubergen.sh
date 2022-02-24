@@ -37,6 +37,7 @@
 #               -W            Include WordPress installation
 #               -u            Unpack UberGen Distribution, Only
 #               -p            Prompt for approval between stages
+#               -y            No prompt on destructive actions (ex: distro unpack)
 #               -l            Log
 #               -L <logfile>  Write log data to <logfile> (default=./ubergen.log)
 #               -v            Verbose (displays detailed info)
@@ -175,6 +176,7 @@ ${prognm} [-l] [-L <logfile>] [-vdtup]
         -u            Unpack UberGen Distribution, Only
         -P            Unpack UBerGen Distribution password
         -p            Prompt between major sections
+        -y            No prompt on destructive actions (ex: distro unpack)
         -l            Log
         -L <logfile>  Write log data to <logfile> (default=./ubergen.log)
         -v            Verbose (displays detailed info)
