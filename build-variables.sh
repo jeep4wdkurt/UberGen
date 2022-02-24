@@ -14,6 +14,8 @@
 #
 #	History:
 #       Date        Version  Author         Desc
+#       2022.02.22  01.04    KurtSchulte    Add install status tracking, ColumnStore support, move
+#                                             non-user params to [core-sonfigureation.sh]
 #       2021.01.28  01.03    KurtSchulte    Original Version
 #
 ####################################################################################################
@@ -22,8 +24,10 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 
 # Processing Flags
 #
-ug_verbose=1
-ug_apache_log_level='debug'
+ug_verbose=1											# UberGen install log level
+
+ug_apache_log_level='debug'								# Apache log level
+ug_mariadb_column_store_enable=1						# MariaDB ColumnStore install flag
 
 #
 # Server Info
@@ -50,7 +54,13 @@ ug_ftps_port=3321                                       # Secure FTP command por
 ug_ftps_data_port=3320                                  # Secure FTP data port
 ug_ssh_port=3322                                        # Secure Shell port
 ug_db_port=3369                                         # MariaDB Database port
+ug_db_cross_engine_port=3370                            # MariaDB Cross Engine Port
 ug_ocsp_port=3381                                       # OCSP port
+
+#
+# Hosts
+#
+ug_db_cross_engine_host=127.0.0.1                       #  MariaDB Cross Engine Host
 
 #
 # SSL
@@ -76,28 +86,12 @@ ug_server_ocsp_data="ocsp;sign;OCSP Server;On-line Certificate Status Server;${u
 ug_server_crl_data="crl;crl;CRL Server;Certificate Revokation List Server;${ug_certs_owner};${ug_certs_group};755;127.0.0.1"
 
 #
-# Folders
-#
-ug_shared_files_root=/usr/share/cognogistics            # Cognogistics shared user files					TODO: NOT USED ANYWHERE?
-
-ug_skeleton_folder=/etc/skel                            # System folder for new user template files
-ug_kits_root=/var/kits                                  # Software kits
-ug_web_root=/var/www                                    # Web Data root folder
-ug_ssl_root=/etc/ssl                                    # SSL Configuration root folder
-ug_certs_root=/opt/ca                                   # Certificates Data Root Folder
-
-#
 # Groups
 #
 ug_sysgrp_system="wcisys"                               # System level users
 ug_sysgrp_admin="wciadmins"                             # Administrators and super users
 ug_sysgrp_dev="wcidev"                                  # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
-
-#
-# RHEL SELinux Security Context
-#
-ug_rhel_context_web="httpd_sys_content_t"               # Security context for web content
 
 #
 # Users
@@ -155,7 +149,13 @@ ug_client_list="animal"									# Clients to generate certs for
 ug_client_animal_data="animal;client;Animal;Animal Workstation;${ug_sysuser_sysroot_name};${ug_sysgrp_admin};755;127.0.0.1"
 
 #
-# Database Users
+# Database Cross Engine User (db-only)
+# 
+ug_db_cross_engine_user=dbcrosseng                      # MariaDB Cross-Engine user
+ug_db_cross_engine_pass="wc1^eng1n3"                    # MariaDB Cross-Engine password
+
+#
+# Database Users (mirrors of system users)
 #	DB User Data Format:
 # 		ug_dbuser_<userid>_data = "<user-name>;<user-password>;<region-role-list>;<host-list>"
 #		region-role-list is a comma separated list of <region>:<role> pairs.
@@ -167,7 +167,7 @@ ug_db_colocated=1                                       # Databases are server c
 
 ug_dbuser_list=sysroot,sysadmin,sysdev1,sysapp          # List of Database User IDs. One section of detail below for each.
 
-# Root
+# database root user
 ug_dbuser_root_name=root
 ug_dbuser_root_pass="wciroot"
 ug_dbuser_root_hosts="localhost"
@@ -178,28 +178,28 @@ fi
 ug_dbuser_root_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_root_data="root;${ug_dbuser_root_pass};${ug_dbuser_root_region_roles};${ug_dbuser_root_hosts}"
 
-# wci Root
+# database wci application root
 ug_dbuser_sysroot_name=wciroot
 ug_dbuser_sysroot_pass="${ug_sysuser_sysroot_pass}"
 ug_dbuser_sysroot_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_sysroot_hosts="localhost"
 ug_dbuser_sysroot_data="${ug_dbuser_sysroot_name};${ug_dbuser_sysroot_pass};${ug_dbuser_sysroot_region_roles};${ug_dbuser_sysroot_hosts}"
 
-# wci Administrator
+# database wci application Administrator
 ug_dbuser_sysadmin_name=wciadmin
 ug_dbuser_sysadmin_pass="${ug_sysuser_sysadmin_pass}"
 ug_dbuser_sysadmin_region_roles="prod:user,mod:app,dev:app"
 ug_dbuser_sysadmin_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysadmin_data="${ug_dbuser_sysadmin_name};${ug_dbuser_sysadmin_pass};${ug_dbuser_sysadmin_region_roles};${ug_dbuser_sysadmin_hosts}"
 
-# UGX Developer 1
+# database wci application Developer 1
 ug_dbuser_sysdev1_name=wcidev1
 ug_dbuser_sysdev1_pass="${ug_sysuser_sysdev1_pass}"
 ug_dbuser_sysdev1_region_roles="prod:user,mod:user,dev:sys"
 ug_dbuser_sysdev1_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysdev1_data="${ug_dbuser_sysdev1_name};${ug_dbuser_sysdev1_pass};${ug_dbuser_sysdev1_region_roles};${ug_dbuser_sysdev1_hosts}"
 
-# UGX Application
+# database wci application Application User
 ug_dbuser_sysapp_name=wciapp
 ug_dbuser_sysapp_pass="${ug_sysuser_sysapp_pass}"
 ug_dbuser_sysapp_region_roles="prod:app,mod:app,dev:app"

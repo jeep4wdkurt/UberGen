@@ -9,7 +9,7 @@
 #			optionally, WordPress). 
 #
 #		Supported Linux Distros
-#			Debian 10.x
+#			Debian 11.x,10.x
 #			Ubuntu Workstation 20.x
 #
 #		Component Scripts:
@@ -72,7 +72,22 @@ UnpackDistro() {
 	local zipPassOption=
 	[ "${optDistroPass}" != "" ] && zipPassOption="-P ${optDistroPass}"
 
-	if [ ! -e "${keyFile}" ] ; then
+	local doUnpack=1
+	if [ -e "${keyFile}" ] ; then
+		doUnpack=
+		if [ $optUnpack ] ; then
+			doUnpack=$optYes
+			if [ ! $optYes ] ; then
+				local ans
+				while [[ "${ans}" != *[YyNn]* ]] ; do
+					read -p "UberGen is already installed.  Overwrite? [Y/N]: " /dev/tty
+				done
+				[[ "${ans}" == *[Yy]* ]] && doUnpack=1
+			fi
+		fi
+	fi
+
+	if [ $doUnpack ] ; then
 		barf "Unpacking UberGen distribution tarball (${tarBall})..."
 		cd "${scriptFolder}"
 		unzip $zipPassOption -p "${tarBall}" | tar -x 
@@ -109,8 +124,9 @@ getOptions() {
 	optDistroPass=
 	optWordPress=
 	optPrompt=
+	optYes=
 
-	while getopts "?hlL:vdtupP:WaS" OPTION
+	while getopts "?hlL:vdtupP:WaSy" OPTION
 	do
 		case $OPTION in
 			h)	usage ; exit 1                                      ;;
@@ -118,6 +134,7 @@ getOptions() {
 			u)  optUnpack=1											;;
 			P)  optDistroPass=$OPTARG								;;
 			p)	optPrompt=1                                         ;;
+			y)	optYes=1                                            ;;
 			l)	optLog=1                                            ;;
 			a)	optLogAppend=1                                      ;;
 			S)	optLogSeparate=1                                    ;;
