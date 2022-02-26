@@ -63,6 +63,11 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 source ${scriptFolder}/core-common.sh					# UberGen common routines
 
 #
+# Constants
+#
+UG_UBER_RUN=1
+
+#
 # Unpack Distribution
 # 
 UnpackDistro() {
