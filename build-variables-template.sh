@@ -112,9 +112,9 @@ ug_server_crl_data="crl;crl;CRL Server;Certificate Revokation List Server;${ug_c
 #
 # Groups
 #
-ug_sysgrp_system="{{ug_database_root_name}}sys"                      # System level users
-ug_sysgrp_admin="{{ug_database_root_name}}admins"                    # Administrators and super users
-ug_sysgrp_dev="{{ug_database_root_name}}dev"                         # Developers
+ug_sysgrp_system="${ug_database_root_name}sys"                      # System level users
+ug_sysgrp_admin="${ug_database_root_name}admins"                    # Administrators and super users
+ug_sysgrp_dev="${ug_database_root_name}dev"                         # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
 
 #
@@ -125,28 +125,28 @@ ug_sysgrp_web="www-data"                                # Web Applications
 #
 ug_sysuser_list=sysroot,sysadmin,sysdev1,sysapp
 
-ug_sysuser_sysroot_name={{ug_database_root_name}}root
+ug_sysuser_sysroot_name=${ug_database_root_name}root
 ug_sysuser_sysroot_desc="{{server_desc}} Application Root"
 ug_sysuser_sysroot_groups=${ug_sysgrp_system}:${ug_sysgrp_admin}:${ug_sysgrp_dev}:${ug_sysgrp_web}:SYSTEM:SUDO
 ug_sysuser_sysroot_pass="{{root_password}}"
 ug_sysuser_sysroot_data="${ug_sysuser_sysroot_name};${ug_sysuser_sysroot_desc};${ug_sysuser_sysroot_groups};${ug_sysuser_sysroot_pass}"
 
-ug_sysuser_sysadmin_name={{ug_database_root_name}}admin
+ug_sysuser_sysadmin_name=${ug_database_root_name}admin
 ug_sysuser_sysadmin_desc="{{server_desc}} Application Administrator"
 ug_sysuser_sysadmin_groups=${ug_sysgrp_admin}:${ug_sysgrp_web}
-ug_sysuser_sysadmin_pass="{{ug_database_root_name}}9admin"
+ug_sysuser_sysadmin_pass="${ug_database_root_name}9admin"
 ug_sysuser_sysadmin_data="${ug_sysuser_sysadmin_name};${ug_sysuser_sysadmin_desc};${ug_sysuser_sysadmin_groups};${ug_sysuser_sysadmin_pass}"
 
-ug_sysuser_sysdev1_name={{ug_database_root_name}}dev1
+ug_sysuser_sysdev1_name=${ug_database_root_name}dev1
 ug_sysuser_sysdev1_desc="{{server_desc}} Development"
 ug_sysuser_sysdev1_groups=${ug_sysgrp_dev}:${ug_sysgrp_web}
-ug_sysuser_sysdev1_pass="{{ug_database_root_name}}9dev1"
+ug_sysuser_sysdev1_pass="${ug_database_root_name}9dev1"
 ug_sysuser_sysdev1_data="${ug_sysuser_sysdev1_name};${ug_sysuser_sysdev1_desc};${ug_sysuser_sysdev1_groups};${ug_sysuser_sysdev1_pass}"
 
-ug_sysuser_sysapp_name={{ug_database_root_name}}app
+ug_sysuser_sysapp_name=${ug_database_root_name}app
 ug_sysuser_sysapp_desc="{{server_desc}} Application"
 ug_sysuser_sysapp_groups=${ug_sysgrp_web}
-ug_sysuser_sysapp_pass="{{ug_database_root_name}}9app"
+ug_sysuser_sysapp_pass="${ug_database_root_name}9app"
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
 #
@@ -203,28 +203,28 @@ ug_dbuser_root_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_root_data="root;${ug_dbuser_root_pass};${ug_dbuser_root_region_roles};${ug_dbuser_root_hosts}"
 
 # database wci application root
-ug_dbuser_sysroot_name={{ug_database_root_name}}root
+ug_dbuser_sysroot_name=${ug_database_root_name}root
 ug_dbuser_sysroot_pass="${ug_sysuser_sysroot_pass}"
 ug_dbuser_sysroot_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_sysroot_hosts="localhost"
 ug_dbuser_sysroot_data="${ug_dbuser_sysroot_name};${ug_dbuser_sysroot_pass};${ug_dbuser_sysroot_region_roles};${ug_dbuser_sysroot_hosts}"
 
 # database wci application Administrator
-ug_dbuser_sysadmin_name={{ug_database_root_name}}admin
+ug_dbuser_sysadmin_name=${ug_database_root_name}admin
 ug_dbuser_sysadmin_pass="${ug_sysuser_sysadmin_pass}"
 ug_dbuser_sysadmin_region_roles="prod:user,mod:app,dev:app"
 ug_dbuser_sysadmin_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysadmin_data="${ug_dbuser_sysadmin_name};${ug_dbuser_sysadmin_pass};${ug_dbuser_sysadmin_region_roles};${ug_dbuser_sysadmin_hosts}"
 
 # database wci application Developer 1
-ug_dbuser_sysdev1_name={{ug_database_root_name}}dev1
+ug_dbuser_sysdev1_name=${ug_database_root_name}dev1
 ug_dbuser_sysdev1_pass="${ug_sysuser_sysdev1_pass}"
 ug_dbuser_sysdev1_region_roles="prod:user,mod:user,dev:sys"
 ug_dbuser_sysdev1_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysdev1_data="${ug_dbuser_sysdev1_name};${ug_dbuser_sysdev1_pass};${ug_dbuser_sysdev1_region_roles};${ug_dbuser_sysdev1_hosts}"
 
 # database wci application Application User
-ug_dbuser_sysapp_name={{ug_database_root_name}}app
+ug_dbuser_sysapp_name=${ug_database_root_name}app
 ug_dbuser_sysapp_pass="${ug_sysuser_sysapp_pass}"
 ug_dbuser_sysapp_region_roles="prod:app,mod:app,dev:app"
 ug_dbuser_sysapp_hosts="localhost,%.${ug_server_domain}"
