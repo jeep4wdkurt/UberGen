@@ -60,7 +60,7 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 #
 # Core Routines
 #
-source ${scriptFolder}/core-common.sh					# UberGen common routines
+source ${scriptFolder}/core-io.sh						# UberGen common routines
 
 #
 # Constants
