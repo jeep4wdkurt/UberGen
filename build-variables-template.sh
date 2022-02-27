@@ -29,8 +29,9 @@
 #			{{ftps_data_port}}				Secure FTP data port
 #			{{ssh_port}}					Secure Shell (SSH) port
 #			{{mariadb_port}}				MariaDB Database port
-#			{{mariadb_cross_engine_port}}	MariaDB Database port
+#			{{mariadb_cross_engine_port}}	MariaDB Database Cross-Engine port
 #			{{ocsp_port}}					OCSP port
+#           {{server_abbr}}                 Server abbreviation (used for WP databases and node names)
 #
 #	Copyright:
 #		Copyright (c) 2022, Kurt Schulte - All rights reserved.  No use without written authorization.
@@ -56,6 +57,7 @@ ug_mariadb_column_store_enable=1						# MariaDB ColumnStore install flag
 ug_server_name="{{hostname}}"
 ug_server_domain="{{domainname}}"
 ug_server_desc="{{server_desc}}"
+ug_server_abbr="{{server_abbr}}"
 
 ug_org_name="{{org_name}}"
 ug_org_country="{{org_country}}"
@@ -66,8 +68,8 @@ ug_org_unit="{{org_organization}}"
 ug_org_email="{{org_email}}"
 ug_org_abbr="{{org_abbr}}"
 
-ug_server_database="{{org_abbr}}"
-ug_server_webcore="{{org_abbr}}"
+ug_database_root_name="${ug_server_abbr}"
+ug_server_root_name="${ug_server_abbr}"
 
 #
 # Ports
@@ -110,9 +112,9 @@ ug_server_crl_data="crl;crl;CRL Server;Certificate Revokation List Server;${ug_c
 #
 # Groups
 #
-ug_sysgrp_system="{{org_abbr}}sys"                      # System level users
-ug_sysgrp_admin="{{org_abbr}}admins"                    # Administrators and super users
-ug_sysgrp_dev="{{org_abbr}}dev"                         # Developers
+ug_sysgrp_system="{{ug_database_root_name}}sys"                      # System level users
+ug_sysgrp_admin="{{ug_database_root_name}}admins"                    # Administrators and super users
+ug_sysgrp_dev="{{ug_database_root_name}}dev"                         # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
 
 #
@@ -123,28 +125,28 @@ ug_sysgrp_web="www-data"                                # Web Applications
 #
 ug_sysuser_list=sysroot,sysadmin,sysdev1,sysapp
 
-ug_sysuser_sysroot_name={{org_abbr}}root
+ug_sysuser_sysroot_name={{ug_database_root_name}}root
 ug_sysuser_sysroot_desc="{{server_desc}} Application Root"
 ug_sysuser_sysroot_groups=${ug_sysgrp_system}:${ug_sysgrp_admin}:${ug_sysgrp_dev}:${ug_sysgrp_web}:SYSTEM:SUDO
 ug_sysuser_sysroot_pass="{{root_password}}"
 ug_sysuser_sysroot_data="${ug_sysuser_sysroot_name};${ug_sysuser_sysroot_desc};${ug_sysuser_sysroot_groups};${ug_sysuser_sysroot_pass}"
 
-ug_sysuser_sysadmin_name={{org_abbr}}admin
+ug_sysuser_sysadmin_name={{ug_database_root_name}}admin
 ug_sysuser_sysadmin_desc="{{server_desc}} Application Administrator"
 ug_sysuser_sysadmin_groups=${ug_sysgrp_admin}:${ug_sysgrp_web}
-ug_sysuser_sysadmin_pass="{{org_abbr}}9admin"
+ug_sysuser_sysadmin_pass="{{ug_database_root_name}}9admin"
 ug_sysuser_sysadmin_data="${ug_sysuser_sysadmin_name};${ug_sysuser_sysadmin_desc};${ug_sysuser_sysadmin_groups};${ug_sysuser_sysadmin_pass}"
 
-ug_sysuser_sysdev1_name={{org_abbr}}dev1
+ug_sysuser_sysdev1_name={{ug_database_root_name}}dev1
 ug_sysuser_sysdev1_desc="{{server_desc}} Development"
 ug_sysuser_sysdev1_groups=${ug_sysgrp_dev}:${ug_sysgrp_web}
-ug_sysuser_sysdev1_pass="{{org_abbr}}9dev1"
+ug_sysuser_sysdev1_pass="{{ug_database_root_name}}9dev1"
 ug_sysuser_sysdev1_data="${ug_sysuser_sysdev1_name};${ug_sysuser_sysdev1_desc};${ug_sysuser_sysdev1_groups};${ug_sysuser_sysdev1_pass}"
 
-ug_sysuser_sysapp_name={{org_abbr}}app
+ug_sysuser_sysapp_name={{ug_database_root_name}}app
 ug_sysuser_sysapp_desc="{{server_desc}} Application"
 ug_sysuser_sysapp_groups=${ug_sysgrp_web}
-ug_sysuser_sysapp_pass="{{org_abbr}}9app"
+ug_sysuser_sysapp_pass="{{ug_database_root_name}}9app"
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
 #
@@ -156,9 +158,9 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 #	Server data format:
 #		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database};${ug_server_webcore}"
-ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}mod;${ug_server_webcore}mod"
-ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}dev;${ug_server_webcore}dev"
+ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name};${ug_server_root_name}"
+ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}mod;${ug_server_root_name}mod"
+ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}dev;${ug_server_root_name}dev"
 
 #
 # Client Info
@@ -201,28 +203,28 @@ ug_dbuser_root_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_root_data="root;${ug_dbuser_root_pass};${ug_dbuser_root_region_roles};${ug_dbuser_root_hosts}"
 
 # database wci application root
-ug_dbuser_sysroot_name={{org_abbr}}root
+ug_dbuser_sysroot_name={{ug_database_root_name}}root
 ug_dbuser_sysroot_pass="${ug_sysuser_sysroot_pass}"
 ug_dbuser_sysroot_region_roles="prod:sys,mod:sys,dev:sys"
 ug_dbuser_sysroot_hosts="localhost"
 ug_dbuser_sysroot_data="${ug_dbuser_sysroot_name};${ug_dbuser_sysroot_pass};${ug_dbuser_sysroot_region_roles};${ug_dbuser_sysroot_hosts}"
 
 # database wci application Administrator
-ug_dbuser_sysadmin_name={{org_abbr}}admin
+ug_dbuser_sysadmin_name={{ug_database_root_name}}admin
 ug_dbuser_sysadmin_pass="${ug_sysuser_sysadmin_pass}"
 ug_dbuser_sysadmin_region_roles="prod:user,mod:app,dev:app"
 ug_dbuser_sysadmin_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysadmin_data="${ug_dbuser_sysadmin_name};${ug_dbuser_sysadmin_pass};${ug_dbuser_sysadmin_region_roles};${ug_dbuser_sysadmin_hosts}"
 
 # database wci application Developer 1
-ug_dbuser_sysdev1_name={{org_abbr}}dev1
+ug_dbuser_sysdev1_name={{ug_database_root_name}}dev1
 ug_dbuser_sysdev1_pass="${ug_sysuser_sysdev1_pass}"
 ug_dbuser_sysdev1_region_roles="prod:user,mod:user,dev:sys"
 ug_dbuser_sysdev1_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysdev1_data="${ug_dbuser_sysdev1_name};${ug_dbuser_sysdev1_pass};${ug_dbuser_sysdev1_region_roles};${ug_dbuser_sysdev1_hosts}"
 
 # database wci application Application User
-ug_dbuser_sysapp_name={{org_abbr}}app
+ug_dbuser_sysapp_name={{ug_database_root_name}}app
 ug_dbuser_sysapp_pass="${ug_sysuser_sysapp_pass}"
 ug_dbuser_sysapp_region_roles="prod:app,mod:app,dev:app"
 ug_dbuser_sysapp_hosts="localhost,%.${ug_server_domain}"
@@ -263,4 +265,4 @@ ug_dbrole_user_procedure_privs=""
 # Remote Desktop (TigerVNC)
 #
 ug_display_geometry="1920x1080"							#Display Geometry
-ug_remote_users="{{org_abbr}}root,{{org_abbr}}admin,{{org_abbr}}dev1"
+ug_remote_users="sysroot,sysadmin,sysdev1"
