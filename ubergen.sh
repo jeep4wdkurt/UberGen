@@ -211,7 +211,7 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},openssl-config Create"	# OpenSSL certificate generation and configuration
 	uberModules="${uberModules},system-add-users"		# System users, groups, and support scripts [must come after SSL]
 	uberModules="${uberModules},openssh-install"		# OpenSSH server install and configuration
-	uberModules="${uberModules},mariadb-install"		# Database (MariaDB)
+	uberModules="${uberModules},mariadb-install -C"		# Database (MariaDB with InnoDB and ColumnStore engines)
 	uberModules="${uberModules},brave-install"			# Brave privacy web browser
 	uberModules="${uberModules},vsftp-install"			# Secure FTP Server (VSFTP) install and configure
 	uberModules="${uberModules},vnc-install"			# TigerVNC Remote Desktop Server install and configure
