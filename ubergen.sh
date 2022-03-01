@@ -61,6 +61,7 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 # Core Routines
 #
 source ${scriptFolder}/core-io.sh						# UberGen common routines
+source ${scriptFolder}/core-restart.sh					# UberGen cross-reboot routines
 
 #
 # Constants
@@ -201,6 +202,11 @@ cd "${scriptFolder}"
 
 UnpackDistro									# Unpack UberGen distribution
 if [ ! $optUnpack ] ; then
+
+	UberStatusGet
+
+	barfdt "ug_status(returned)      : ${ug_status}"
+	barfdt "UG_STATUS_NONE           : ${UG_STATUS_NONE}"
 
 	uberModules="prerequisites-install"					# Prerequisites
 	uberModules="${uberModules},perl-install"			# Perl Language

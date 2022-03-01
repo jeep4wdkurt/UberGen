@@ -41,12 +41,17 @@ barf()   	{ echo "$1" ; barfl "$1" ; }
 #catbarfl()  { local fn="${1--}";                [ $optLog ] && cat  < <(CatStamp "${fn}") >>"${optLogFile}" ; }		# Async output substitute process lags
 barfl()  	{ [ $optLog ] && 		cat < <(LogStamp "$1") >>"${optLogFile}" ; }
 barfv()  	{ [ $optVerbose ] && 	barf "$1" ; }
+barfvs()  	{ [ $optVerbose ] && 	barfs  "$1" ; }
 barfd()  	{ [ $optDebug ] &&		barf "$1" ; }
 barfdd() 	{ [ $optDebug ] &&		barf "DEBUG:$1" ; }
+barfds() 	{ [ $optDebug ] &&		barfs "DEBUG:$1" ; }
 barfdt() 	{ [ $optDebug ] &&		barf "TRACE:$1" ; }
 barft()  	{ [ $optTrace ] &&		barf "TRACE:$1" ; }
+barfts()  	{ [ $optTrace ] &&		barfs "TRACE:$1" ; }
+
 barfe()  	{ barf "$1" ; exit 1 ; }
 barfee() 	{ barfe "${prognm}.${progLabel}.Error: $1" ; }
+barfs()		{ local currTS=$(date +%Y.%m.%d-%H.%M.%S); barf "${currTS}: $1"; }
 
 catbarf() {
 	local fn="${1--}";
