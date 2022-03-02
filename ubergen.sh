@@ -169,7 +169,6 @@ getOptions() {
 	LogInitialize "${optLog}" "${optLogFile}" "${optLogAppend}"
 	
 	[ $optLog ] && logAppendFlag="-a"			# Cause child modules to append to this log
-	
 
 }
 
@@ -205,8 +204,9 @@ if [ ! $optUnpack ] ; then
 
 	UberStatusGet
 
-	barfdt "ug_status(returned)      : ${ug_status}"
-	barfdt "UG_STATUS_NONE           : ${UG_STATUS_NONE}"
+	barfdt "ug_status_module(returned) : ${ug_status_module}"
+	barfdt "ug_status(returned)        : ${ug_status}"
+	barfdt "UG_STATUS_NONE             : ${UG_STATUS_NONE}"
 
 	uberModules="prerequisites-install"					# Prerequisites
 	uberModules="${uberModules},perl-install"			# Perl Language
@@ -235,6 +235,8 @@ if [ ! $optUnpack ] ; then
 	barf "##"
 
 	moduleCt=0
+	
+	doingRestart= ; [ "${ug_status_module}" != "" ] && doingRestart=1
 	
 	while read moduleInfo ; do
 		moduleCt=$(( $moduleCt + 1 ))
@@ -265,10 +267,16 @@ if [ ! $optUnpack ] ; then
 		
 		# Determine if module should be installed
 		[ $moduleWpOnly ] && [ ! $optWordPress ] && moduleInstallNeeded=
+		
+		# If doing restart, skip modules until we hit the one to restart at
+		[ $doingRestart ] && [ "${moduleName}" != "${ug_status_module}" ] && moduleInstallNeeded=
 
 		# Install module
 		barfd "Install module '${moduleName}',installNeeded=${moduleInstallNeeded}"
 		if [ $moduleInstallNeeded ] ; then
+		
+			# clear doing restart flag... carry on normal from here, if it was a restart
+			doingRestart=
 		
 			# determine log file name, if logging separately
 			if [ $optLogSeparate ] ; then

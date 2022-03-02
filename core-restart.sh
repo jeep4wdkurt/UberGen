@@ -56,8 +56,14 @@ UberStatusGet() {
 	[ "${ug_status_file}" == "" ] && barfee "Error: UberGen configuration variable ug_status_file is not set."
 
 	ug_status="${UG_STATUS_NONE}"
-	[ -f "${ug_status_file}" ] && ug_status=$(cat "${ug_status_file}" | sed -e 's~^[ \t]*status[ \t]*=~~;s~[\ ]\+$~~')
-	barfdt "UberStatus = '${ug_status}'"
+	ug_status_module=""
+	[ -f "${ug_status_file}" ] && {
+		ug_status=$(cat "${ug_status_file}" | sed -e 's~^[ \t]*status[ \t]*=~~;s~[\ ]\+$~~') ;
+		ug_status_module="${ug_status%%:*}" ;
+	}
+
+	barfdt "ug_status_module = '${ug_status_module}'"
+	barfdt "ug_status        = '${ug_status}'"
 	
 	barfdt "UberStatusGet.Exit"
 }
