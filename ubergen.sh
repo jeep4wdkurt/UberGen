@@ -31,7 +31,7 @@
 #			wordpress-install			WordPresss installation
 #
 #	Usage:
-#       ubergen.sh [-l] [-L <logfile>] [-v] [-d] [-t] [-u] [-p] [-W]
+#       ubergen.sh [-laSvdty] [-L <logfile>] [-u] [-p] [-W] -P <password>
 #
 #           Options:
 #               -W            Include WordPress installation
@@ -40,6 +40,7 @@
 #               -y            No prompt on destructive actions (ex: distro unpack)
 #               -l            Log
 #               -L <logfile>  Write log data to <logfile> (default=./ubergen.log)
+#               -S            Log separate
 #               -v            Verbose (displays detailed info)
 #               -d            Debug (displays more detailed info)
 #               -t            Trace (displays exhaustive info)
@@ -60,7 +61,8 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 #
 # Core Routines
 #
-source ${scriptFolder}/core-io.sh						# UberGen common routines
+source ${scriptFolder}/core-configuration.sh			# UberGen configuration data and routines
+source ${scriptFolder}/core-io.sh						# UberGen I/O routines
 source ${scriptFolder}/core-restart.sh					# UberGen cross-reboot routines
 
 #
@@ -174,7 +176,7 @@ getOptions() {
 
 usage() {
     cat <<EOFUsage
-${prognm} [-l] [-L <logfile>] [-vdtup]
+${prognm} [-laSvdty] [-L <logfile>] [-u] [-p] [-W] -P <password>
 
     Options:
         -W            Include WordPress installation
@@ -184,6 +186,7 @@ ${prognm} [-l] [-L <logfile>] [-vdtup]
         -y            No prompt on destructive actions (ex: distro unpack)
         -l            Log
         -L <logfile>  Write log data to <logfile> (default=./ubergen.log)
+        -S            Log separate
         -v            Verbose (displays detailed info)
         -d            Debug (displays more detailed info)
         -t            Trace (displays exhaustive info)

@@ -39,7 +39,7 @@ UberStatusSet() {
 	local newStatus="$1"
 	local progLabel="UberStatusSet" ; barfdt "${progLabel}.Entry(newStatus='${newStatus}')"
 
-	[ "${ug_status_file}" == "" ] && barfee "Error: UberGen configuration variable ug_status_file is not set."
+	[ "${ug_status_file}" == "" ] && barfee "UberGen configuration variable [ug_status_file] is not set."
 
 	ug_status="${newStatus}"							# Set working status
 	echo "status=${newStatus}" >"${ug_status_file}"		# Persist status
@@ -53,7 +53,7 @@ UberStatusSet() {
 UberStatusGet() {
 	local progLabel="UberStatusGet" ; barfdt "${progLabel}.Entry()"
 
-	[ "${ug_status_file}" == "" ] && barfee "Error: UberGen configuration variable ug_status_file is not set."
+	[ "${ug_status_file}" == "" ] && barfee "UberGen configuration variable [ug_status_file] is not set."
 
 	ug_status="${UG_STATUS_NONE}"
 	ug_status_module=""
