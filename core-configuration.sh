@@ -63,6 +63,7 @@ ug_mariadb_install_script="${scriptFolder}/mariadb-install.sh"
 ug_mysqlwb_apt_kit_file="${ug_mysqlwb_apt_kit_folder%%,*}/mysql-apt-config_0.8.22-1_all.deb"
 ug_mysqlwb_apt_kit_uri="https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb"
 ug_mysqlwb_apt_kit_checksum="ade43b291d4b8db2a00e292de7307745"
+ug_mysql_apt_sources_file="/etc/apt/sources.list.d/mysql.list"
 
 #echo "DEBUG: ug_mariadb_install_script='${ug_mariadb_install_script}'"
 
@@ -76,21 +77,6 @@ ug_rhel_context_web="httpd_sys_content_t"               # Security context for w
 # Password Criteria
 #
 ug_generated_password_length=20                         # Size of generated passwords
-
-#
-# OS Flavor Constants
-#
-OS_DEBIAN="Debian"
-OS_UBUNTU="Ubuntu"
-OS_CENTOS="CentOS"
-OS_REDHAT="RedHat"
-OS_SLES="SLES"
-
-#
-# OS Base Distro Constants
-#
-OS_BASE_DEBIAN="Debian"
-OS_BASE_REDHAT="RedHat"
 
 #
 # Fetch Build Variables
