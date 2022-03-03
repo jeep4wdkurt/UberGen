@@ -167,6 +167,11 @@ getOptions() {
 	logAppendFlag=	; 	[ $optLogAppend ] &&	logAppendFlag="-a" ;
 	logFlag=	; 		[ $optLog ] && 			logFlag="-l" ;
 	logFileFlag= ;		[ "${optLogFile}" != "" ] && logFileFlag='-L"'"${optLogFile}"'"'
+	
+	logSeparateFlag= ;	[ $optLogSeparate ] &&	logSeparateFlag="-S" ;
+	wordPressFlag= ;	[ $optWordPress ] &&	wordPressFlag="-W" ;
+
+	UG_UBER_FLAGS="${logSeparateFlag} ${wordPressFlag} ${verboseFlag} ${debugFlag} ${traceFlag} ${logFileFlag}"
 
 	LogInitialize "${optLog}" "${optLogFile}" "${optLogAppend}"
 	
