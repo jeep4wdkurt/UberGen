@@ -268,9 +268,9 @@ if [ ! $optUnpack ] ; then
 		barf "DEBUG: moduleWpOnly2='${moduleWpOnly}'"
 
 		# Get module options and params, if any
-		if [ "${moduleInfo// /}" != "${moduleInfo}" ] ; then
-			moduleName="${moduleInfo%% *}"
-			moduleTags="${moduleInfo##* }"
+		if [ "${moduleName// /}" != "${moduleName}" ] ; then
+			moduleTags="${moduleName##* }"
+			moduleName="${moduleName%% *}"
 			[ "${moduleTags// /}" != "${moduleTags}" ] && barfe "Ubergen Module '${moduleName}' has multiple params/options. Codefix needed"
 			if [ "${moduleTags:0:1}" == "-" ] ; then
 				moduleFlags="${moduleTags}"
