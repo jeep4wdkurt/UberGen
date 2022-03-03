@@ -254,12 +254,19 @@ if [ ! $optUnpack ] ; then
 		moduleWpOnly=
 		moduleInstallNeeded=1
 		
+		barf "DEBUG: Evaluating moduleInfo '${moduleInfo}'..."
+		barf "DEBUG: moduleName1='${moduleName}'"
+		barf "DEBUG: moduleWpOnly1='${moduleWpOnly}'"
+		
 		# Get WP-Only flag, if any
 		if [ "${moduleName:0:3}" == "WP:" ] ; then
 			moduleName="${moduleName:3}"
 			moduleWpOnly=1
 		fi
 		
+		barf "DEBUG: moduleName2='${moduleName}'"
+		barf "DEBUG: moduleWpOnly2='${moduleWpOnly}'"
+
 		# Get module options and params, if any
 		if [ "${moduleInfo// /}" != "${moduleInfo}" ] ; then
 			moduleName="${moduleInfo%% *}"
