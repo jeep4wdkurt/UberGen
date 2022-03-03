@@ -40,11 +40,11 @@ PERM_FILE_WORLD_READ_EXECUTE=755                        # File world read and ex
 PERM_FOLDER_WORLD_READONLY=755                          # Folder world read and traverse access
 
 #
-# Folders
+# Folders		(spec,prot,desc,init,owner,group)
 #
 ug_shared_files_root=/usr/share/cognogistics            # Cognogistics shared user files					TODO: NOT USED ANYWHERE?
 ug_skeleton_folder=/etc/skel                            # System folder for new user template files
-ug_kits_root=/var/kits                                  # Software kits
+ug_kits_root="/var/kits,${PERM_FOLDER_WORLD_READONLY},Install Kits,,root,root"                      # Software kits
 ug_web_root=/var/www                                    # Web Data root folder
 ug_ssl_root=/etc/ssl                                    # SSL Configuration root folder
 ug_certs_root=/opt/ca                                   # Certificates Data Root Folder
@@ -52,13 +52,16 @@ ug_temp_folder="${HOME}/temp,  ${PERM_FOLDER_WORLD_READONLY},  User temporary da
 ug_user_local_folder="${HOME}/ubergen,  ${PERM_FOLDER_WORLD_READONLY},  UberGen local user data,"	# UberGen local user data folder
 ug_status_folder="${HOME}/temp,  ${PERM_FOLDER_WORLD_READONLY},  UberGen status tracking data,"		# Status tracking folder
 ug_log_folder="${HOME}/temp,  ${PERM_FOLDER_WORLD_READONLY},  UberGen logs,"						# Logs folder
+ug_mysql_workbench_apt_kit_folder="${ug_kits_root%%,*}/mysql-workbench-apt,${PERM_FOLDER_WORLD_READONLY},Mysql Workbench APT Configuration Kit,,root,root"	# MYSQL Workbench APT Configuration package
 
 #
-# Files
+# Files			(spec,prot,desc,init,owner,group)
 #
-ug_status_file="${ug_status_folder%%,*}/ubergen.status.txt"	# UberGen installation status tracking file
+ug_status_file="${ug_status_folder%%,*}/ubergen.install.status.txt"	# UberGen installation status tracking file
 ug_ubergen_script="${scriptFolder}/ubergen.sh"
 ug_mariadb_install_script="${scriptFolder}/mariadb-install.sh"
+ug_mysql_workbench_apt_kit_file="${ug_mysql_workbench_apt_kit_folder}/mysql-apt-config_0.8.22-1_all.deb"
+ug_mysql_workbench_apt_kit_uri="https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb"
 
 #echo "DEBUG: ug_mariadb_install_script='${ug_mariadb_install_script}'"
 
@@ -230,4 +233,3 @@ SystemUserVarsSet() {
 	
 	barfdt "SystemUserVarsSet.Exit()"
 }
-

@@ -24,6 +24,7 @@
 #			openssh-install				OpenSSH server install and configuration
 #			mariadb-install				Database (MariaDB) installation and configuration
 #			mariadb-add-users			Database users creation
+#           mysql-workbench-install     MySQL Community Workbench
 #			brave-install				Brave privacy web browser
 #			vsftp-install				Secure FTP Server (VSFTP) install and configuration
 #			vnc-install					TigerVNC Remote Desktop Server install and configuration
@@ -216,20 +217,21 @@ if [ ! $optUnpack ] ; then
 	barf "ug_status(returned)        : ${ug_status}"
 	barf "UG_STATUS_NONE             : ${UG_STATUS_NONE}"
 
-	uberModules="prerequisites-install"					# Prerequisites
-	uberModules="${uberModules},perl-install"			# Perl Language
-	uberModules="${uberModules},php-install"			# PHP Language
-	uberModules="${uberModules},python-install"			# Python Language
-	uberModules="${uberModules},system-hosts"			# System hosts file, configure with region servers
-	uberModules="${uberModules},firewall-install"		# Firewall (UFW)
-	uberModules="${uberModules},openssl-config Create"	# OpenSSL certificate generation and configuration
-	uberModules="${uberModules},system-add-users"		# System users, groups, and support scripts [must come after SSL]
-	uberModules="${uberModules},openssh-install"		# OpenSSH server install and configuration
-	uberModules="${uberModules},mariadb-install -C"		# Database (MariaDB with InnoDB and ColumnStore engines)
-	uberModules="${uberModules},brave-install"			# Brave privacy web browser
-	uberModules="${uberModules},vsftp-install"			# Secure FTP Server (VSFTP) install and configure
-	uberModules="${uberModules},vnc-install"			# TigerVNC Remote Desktop Server install and configure
-	uberModules="${uberModules},apache-install"			# Apache Web Server install and configure
+	uberModules="prerequisites-install"							# Prerequisites
+	uberModules="${uberModules},perl-install"					# Perl Language
+	uberModules="${uberModules},php-install"					# PHP Language
+	uberModules="${uberModules},python-install"					# Python Language
+	uberModules="${uberModules},system-hosts"					# System hosts file, configure with region servers
+	uberModules="${uberModules},firewall-install"				# Firewall (UFW)
+	uberModules="${uberModules},openssl-config Create"			# OpenSSL certificate generation and configuration
+	uberModules="${uberModules},system-add-users"				# System users, groups, and support scripts [must come after SSL]
+	uberModules="${uberModules},openssh-install"				# OpenSSH server install and configuration
+	uberModules="${uberModules},mariadb-install -C"				# Database (MariaDB with InnoDB and ColumnStore engines)
+	uberModules="${uberModules},mysql-workbench-install"		# MYSQL Community Workbench
+	uberModules="${uberModules},brave-install"					# Brave privacy web browser
+	uberModules="${uberModules},vsftp-install"					# Secure FTP Server (VSFTP) install and configure
+	uberModules="${uberModules},vnc-install"					# TigerVNC Remote Desktop Server install and configure
+	uberModules="${uberModules},apache-install"					# Apache Web Server install and configure
 
 	uberModules="${uberModules},WP:wordpress-mariadb-config"	# Create WordPress database(s) and users
 	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects
