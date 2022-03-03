@@ -62,6 +62,7 @@ ug_ubergen_script="${scriptFolder}/ubergen.sh"
 ug_mariadb_install_script="${scriptFolder}/mariadb-install.sh"
 ug_mysqlwb_apt_kit_file="${ug_mysqlwb_apt_kit_folder%%,*}/mysql-apt-config_0.8.22-1_all.deb"
 ug_mysqlwb_apt_kit_uri="https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb"
+ug_mysqlwb_apt_kit_checksum="ade43b291d4b8db2a00e292de7307745"
 
 #echo "DEBUG: ug_mariadb_install_script='${ug_mariadb_install_script}'"
 
