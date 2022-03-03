@@ -68,7 +68,7 @@ source ${scriptFolder}/core-restart.sh					# UberGen cross-reboot routines
 #
 # Constants
 #
-UG_UBER_RUN=1
+export UG_UBER_RUN=1
 
 #
 # Unpack Distribution
