@@ -212,9 +212,9 @@ if [ ! $optUnpack ] ; then
 
 	UberStatusGet
 
-	barfdt "ug_status_module(returned) : ${ug_status_module}"
-	barfdt "ug_status(returned)        : ${ug_status}"
-	barfdt "UG_STATUS_NONE             : ${UG_STATUS_NONE}"
+	barf "ug_status_module(returned) : ${ug_status_module}"
+	barf "ug_status(returned)        : ${ug_status}"
+	barf "UG_STATUS_NONE             : ${UG_STATUS_NONE}"
 
 	uberModules="prerequisites-install"					# Prerequisites
 	uberModules="${uberModules},perl-install"			# Perl Language
