@@ -60,7 +60,7 @@ ug_mysqlwb_apt_kit_folder="${ug_kits_root%%,*}/mysql-workbench-apt,${PERM_FOLDER
 ug_status_file="${ug_status_folder%%,*}/ubergen.install.status.txt"	# UberGen installation status tracking file
 ug_ubergen_script="${scriptFolder}/ubergen.sh"
 ug_mariadb_install_script="${scriptFolder}/mariadb-install.sh"
-ug_mysqlwb_apt_kit_file="${ug_mysqlwb_apt_kit_folder}/mysql-apt-config_0.8.22-1_all.deb"
+ug_mysqlwb_apt_kit_file="${ug_mysqlwb_apt_kit_folder%%,*}/mysql-apt-config_0.8.22-1_all.deb"
 ug_mysqlwb_apt_kit_uri="https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb"
 
 #echo "DEBUG: ug_mariadb_install_script='${ug_mariadb_install_script}'"
