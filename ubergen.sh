@@ -232,6 +232,7 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},vsftp-install"					# Secure FTP Server (VSFTP) install and configure
 	uberModules="${uberModules},vnc-install"					# TigerVNC Remote Desktop Server install and configure
 	uberModules="${uberModules},apache-install"					# Apache Web Server install and configure
+	uberModules="${uberModules},libreoffice-install"			# Libre Office install
 	uberModules="${uberModules},eclipse-install"				# Eclipse Enterprise install
 	uberModules="${uberModules},WP:wordpress-mariadb-config"	# Create WordPress database(s) and users
 	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects

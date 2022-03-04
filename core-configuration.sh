@@ -120,6 +120,7 @@ GetOsInfo() {
 	OS_VERSION=$("${scriptFolder}/osinfo.sh" -s OS_VERSION)						; traceVariable OS_VERSION
 	OS_FLAVVERFLAV=$("${scriptFolder}/osinfo.sh" -s OS_FLAVVERFLAV)				; traceVariable OS_FLAVVERFLAV
 	OS_CODENAME=$("${scriptFolder}/osinfo.sh" -s OS_CODENAME)					; traceVariable OS_CODENAME
+	OS_DESKTOP=$("${scriptFolder}/osinfo.sh" -s OS_DESKTOP)						; traceVariable OS_DESKTOP
 
 	barfdt "GetOsInfo.Exit"
 }
