@@ -227,7 +227,7 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},system-add-users"				# System users, groups, and support scripts [must come after SSL]
 	uberModules="${uberModules},openssh-install"				# OpenSSH server install and configuration
 	uberModules="${uberModules},mariadb-install -C"				# Database (MariaDB with InnoDB and ColumnStore engines)
-	uberModules="${uberModules},mysql-workbench-install"		# MYSQL Community Workbench
+	uberModules="${uberModules},mysql-workbench-install"		# MySQL Community Workbench
 	uberModules="${uberModules},brave-install"					# Brave privacy web browser
 	uberModules="${uberModules},vsftp-install"					# Secure FTP Server (VSFTP) install and configure
 	uberModules="${uberModules},vnc-install"					# TigerVNC Remote Desktop Server install and configure
@@ -256,19 +256,12 @@ if [ ! $optUnpack ] ; then
 		moduleWpOnly=
 		moduleInstallNeeded=1
 		
-		barf "DEBUG: Evaluating moduleInfo '${moduleInfo}'..."
-		barf "DEBUG: moduleName1='${moduleName}'"
-		barf "DEBUG: moduleWpOnly1='${moduleWpOnly}'"
-		
 		# Get WP-Only flag, if any
 		if [ "${moduleName:0:3}" == "WP:" ] ; then
 			moduleName="${moduleName:3}"
 			moduleWpOnly=1
 		fi
 		
-		barf "DEBUG: moduleName2='${moduleName}'"
-		barf "DEBUG: moduleWpOnly2='${moduleWpOnly}'"
-
 		# Get module options and params, if any
 		if [ "${moduleName// /}" != "${moduleName}" ] ; then
 			moduleTags="${moduleName##* }"
