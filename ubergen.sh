@@ -28,6 +28,9 @@
 #			brave-install				Brave privacy web browser
 #			vsftp-install				Secure FTP Server (VSFTP) install and configuration
 #			vnc-install					TigerVNC Remote Desktop Server install and configuration
+#			apache-install				Apache2 Web Server
+#			libreoffice-install			Libre Office
+#			eclipse-install				Eclipse Enterprise
 #			wordpress-mariadb-config	WordPresss database configuration
 #			wordpress-install			WordPresss installation
 #
