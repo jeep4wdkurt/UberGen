@@ -43,6 +43,7 @@ PERM_FOLDER_WORLD_READONLY=755                          # Folder world read and 
 # Folders		(spec,prot,desc,init,owner,group)
 #
 ug_shared_files_root=/usr/share/cognogistics            # Cognogistics shared user files					TODO: NOT USED ANYWHERE?
+ug_keyrings_folder="/usr/share/keyrings${PERM_FOLDER_WORLD_READONLY},APT GPG Keyrings,,root,root"   # APT Keyrings
 ug_skeleton_folder=/etc/skel                            # System folder for new user template files
 ug_kits_root="/var/kits,${PERM_FOLDER_WORLD_READONLY},Install Kits,,root,root"                      # Software kits
 ug_web_root=/var/www                                    # Web Data root folder
@@ -55,6 +56,7 @@ ug_user_local_folder="${HOME}/ubergen,${PERM_FOLDER_WORLD_READONLY},  UberGen lo
 ug_status_folder="${HOME}/temp,${PERM_FOLDER_WORLD_READONLY},UberGen status tracking data,"			# Status tracking folder
 ug_log_folder="${HOME}/temp,${PERM_FOLDER_WORLD_READONLY},UberGen logs,"							# Logs folder
 ug_mysqlwb_apt_kit_folder="${ug_kits_root%%,*}/mysql-workbench-apt,${PERM_FOLDER_WORLD_READONLY},Mysql Workbench APT Configuration Kit,,root,root"	# MySQL Workbench APT Configuration package
+
 
 #
 # Files			(spec,prot,desc,init,owner,group)
