@@ -43,7 +43,7 @@ PERM_FOLDER_WORLD_READONLY=755                          # Folder world read and 
 # Folders		(spec,prot,desc,init,owner,group)
 #
 ug_shared_files_root=/usr/share/cognogistics            # Cognogistics shared user files					TODO: NOT USED ANYWHERE?
-ug_keyrings_folder="/usr/share/keyrings${PERM_FOLDER_WORLD_READONLY},APT GPG Keyrings,,root,root"   # APT Keyrings
+ug_keyrings_folder="/usr/share/keyrings,${PERM_FOLDER_WORLD_READONLY},APT GPG Keyrings,,root,root"   # APT Keyrings
 ug_skeleton_folder=/etc/skel                            # System folder for new user template files
 ug_kits_root="/var/kits,${PERM_FOLDER_WORLD_READONLY},Install Kits,,root,root"                      # Software kits
 ug_web_root=/var/www                                    # Web Data root folder
