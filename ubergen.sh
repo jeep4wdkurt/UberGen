@@ -22,8 +22,10 @@
 #			firewall-install			Firewall (UFW) installation
 #			openssl-config				OpenSSL certificate generation and configuration
 #			openssh-install				OpenSSH server install and configuration
-#			mariadb-install				Database (MariaDB) installation and configuration
-#			mariadb-add-users			Database users creation
+#			mariadb-install				MariaDB database installation and configuration
+#			mariadb-add-users			MariaDB database users creation
+#			postgresql-install			PostgreSQL database installation and configuration
+#			postgresql-add-users		PostgreSQL database users creation
 #           mysql-workbench-install     MySQL Community Workbench
 #			brave-install				Brave privacy web browser
 #			vsftp-install				Secure FTP Server (VSFTP) install and configuration
@@ -31,14 +33,14 @@
 #			apache-install				Apache2 Web Server
 #			libreoffice-install			Libre Office
 #			eclipse-install				Eclipse Enterprise
-#			wordpress-mariadb-config	WordPresss database configuration
-#			wordpress-install			WordPresss installation
+#			wordpress-mariadb-config	WordPress database configuration MariaDB
+#			wordpress-postgres-config	WordPress database configuration PostgreSQL
+#			wordpress-install			WordPress installation
 #
-#	Usage:
-#       ubergen.sh [-laSvdty] [-L <logfile>] [-u] [-p] [-W] -P <password>
+#   Usage:
+#       ubergen.sh [-laSvdty] [-L <logfile>] [-u] [-p] -P <password>
 #
 #           Options:
-#               -W            Include WordPress installation
 #               -u            Unpack UberGen Distribution, Only
 #               -p            Prompt for approval between stages
 #               -y            No prompt on destructive actions (ex: distro unpack)
@@ -49,12 +51,14 @@
 #               -d            Debug (displays more detailed info)
 #               -t            Trace (displays exhaustive info)
 #
-#	Copyright:
+#   Copyright:
 #		Copyright (c) 2021, Kurt Schulte - All rights reserved.  No use without written authorization.
 #
 #	History:
 #       Date        Version  Author         Desc
-#       2022.02.17  01.04    KurtSchulte    Logging updates, bug fixes, cross-reboot opertation
+#       2022.09.30  01.05    KurtSchulte    PostgreSQL, module install/enable flags from build
+#                                             variables, remove WordPress (-W) command line option
+#       2022.02.17  01.04    KurtSchulte    Logging updates, bug fixes, cross-reboot operation
 #       2021.04.29  01.03    KurtSchulte    Core routines
 #       2021.01.28  01.00    KurtSchulte    Original Version
 #
@@ -135,15 +139,13 @@ getOptions() {
 	optTrace=
 	optUnpack=
 	optDistroPass=
-	optWordPress=
 	optPrompt=
 	optYes=
 
-	while getopts "?hlL:vdtupP:WaSy" OPTION
+	while getopts "?hlL:vdtupP:aSy" OPTION
 	do
 		case $OPTION in
 			h)	usage ; exit 1                                      ;;
-			W)  optWordPress=1										;;
 			u)  optUnpack=1											;;
 			P)  optDistroPass=$OPTARG								;;
 			p)	optPrompt=1                                         ;;
@@ -173,9 +175,8 @@ getOptions() {
 	logFileFlag= ;		[ "${optLogFile}" != "" ] && logFileFlag='-L"'"${optLogFile}"'"'
 	
 	logSeparateFlag= ;	[ $optLogSeparate ] &&	logSeparateFlag="-S" ;
-	wordPressFlag= ;	[ $optWordPress ] &&	wordPressFlag="-W" ;
 
-	export UG_UBER_FLAGS="${logSeparateFlag} ${wordPressFlag} ${verboseFlag} ${debugFlag} ${traceFlag} ${logFileFlag}"
+	export UG_UBER_FLAGS="${logSeparateFlag} ${verboseFlag} ${debugFlag} ${traceFlag} ${logFileFlag}"
 
 	LogInitialize "${optLog}" "${optLogFile}" "${optLogAppend}"
 	
@@ -185,10 +186,9 @@ getOptions() {
 
 usage() {
     cat <<EOFUsage
-${prognm} [-laSvdty] [-L <logfile>] [-u] [-p] [-W] -P <password>
+${prognm} [-laSvdty] [-L <logfile>] [-u] [-p] -P <password>
 
     Options:
-        -W            Include WordPress installation
         -u            Unpack UberGen Distribution, Only
         -P            Unpack UBerGen Distribution password
         -p            Prompt between major sections
@@ -231,15 +231,16 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},openssh-install"				# OpenSSH server install and configuration
 	uberModules="${uberModules},mariadb-install -C"				# Database (MariaDB with InnoDB and ColumnStore engines)
 	uberModules="${uberModules},mysql-workbench-install"		# MySQL Community Workbench
+	uberModules="${uberModules},postgresql-install"				# Database PostgreSQL
 	uberModules="${uberModules},brave-install"					# Brave privacy web browser
 	uberModules="${uberModules},vsftp-install"					# Secure FTP Server (VSFTP) install and configure
 	uberModules="${uberModules},vnc-install"					# TigerVNC Remote Desktop Server install and configure
 	uberModules="${uberModules},apache-install"					# Apache Web Server install and configure
 	uberModules="${uberModules},libreoffice-install"			# Libre Office install
 	uberModules="${uberModules},eclipse-install"				# Eclipse Enterprise install
-	uberModules="${uberModules},WP:wordpress-mariadb-config"	# Create WordPress database(s) and users
-	uberModules="${uberModules},WP:wordpress-mariadb-config -O"	# Permission WordPress database objects
-	uberModules="${uberModules},WP:wordpress-install"			# Install WordPress software
+	uberModules="${uberModules},wordpress-mariadb-config"		# Create WordPress database(s) and users
+	uberModules="${uberModules},wordpress-mariadb-config -O"	# Permission WordPress database objects
+	uberModules="${uberModules},wordpress-install"				# Install WordPress software
 
 	commandDebugFlags="${verboseFlag} ${debugFlag} ${traceFlag}"
 	commandLogFlags="${logAppendFlag} ${logFlag} ${logFileFlag}"
@@ -257,14 +258,7 @@ if [ ! $optUnpack ] ; then
 		moduleName="${moduleInfo}"
 		moduleParams=""
 		moduleFlags=""
-		moduleWpOnly=
 		moduleInstallNeeded=1
-		
-		# Get WP-Only flag, if any
-		if [ "${moduleName:0:3}" == "WP:" ] ; then
-			moduleName="${moduleName:3}"
-			moduleWpOnly=1
-		fi
 		
 		# Get module options and params, if any
 		if [ "${moduleName// /}" != "${moduleName}" ] ; then
@@ -280,7 +274,10 @@ if [ ! $optUnpack ] ; then
 		moduleScript="${scriptFolder}/${moduleName}.sh"
 		
 		# Determine if module should be installed
-		[ $moduleWpOnly ] && [ ! $optWordPress ] && moduleInstallNeeded=
+		[[ "${moduleName}" == "mariadb-install" ]] &&    [[ "${ug_mariadb_install}" != "True" ]] 				&& moduleInstallNeeded=
+		[[ "${moduleName}" == "mariadb-install" ]] &&    [[ "${ug_mariadb_column_store_install}" != "True" ]] 	&& moduleFlags=
+		[[ "${moduleName}" == "postgresql-install" ]] && [[ "${ug_postgresql_install}" != "True" ]] 			&& moduleInstallNeeded=
+		[[ "${moduleName}" == "wordpress-"* ]] &&        [[ "${ug_wordpress_install}" != "True" ]] 				&& moduleInstallNeeded=
 		
 		# If doing restart, skip modules until we hit the one to restart at
 		[ $doingRestart ] && [ "${moduleName}" != "${ug_status_module}" ] && moduleInstallNeeded=

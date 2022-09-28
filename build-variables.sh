@@ -14,8 +14,9 @@
 #
 #	History:
 #       Date        Version  Author         Desc
+#       2022.09.28  01.05    KurtSchulte    Add PostgreSQL, db enable/install flags
 #       2022.02.22  01.04    KurtSchulte    Add install status tracking, ColumnStore support, move
-#                                             non-user params to [core-sonfigureation.sh]
+#                                             non-user params to [core-configureation.sh]
 #       2021.01.28  01.03    KurtSchulte    Original Version
 #
 ####################################################################################################
@@ -27,7 +28,6 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 ug_verbose=1											# UberGen install log level
 
 ug_apache_log_level='debug'								# Apache log level
-ug_mariadb_column_store_enable=1						# MariaDB ColumnStore install flag
 
 #
 # Server Info
@@ -48,14 +48,32 @@ ug_org_email="widget.corp.international@gmail.com"
 ug_org_abbr="widget"
 
 #
+# Package Install Control
+#
+ug_mariadb_install=True                                 # Install MariaDB (True/False)
+ug_mariadb_column_store_install=True                    # Install MariaDB Column Store Engine (True/False)
+ug_postgresql_install=True                              # Install PostgreSQL (True/False)
+ug_wordpress_install=True                               # Install WordPress (True/False)
+ug_wordpress_database=mariadb                           # WordPress Database (mariadb/postgresql)
+
+#
+# Package System Startup Control
+#
+ug_ftps_enable=True                                     # Enable Secure FTP system startup (True/False)
+ug_ssh_enable=True                                      # Enable Secure Shell (SSH) system startup (True/False)
+ug_mariadb_enable=True                                  # Enable MariaDB system startup (True/False)
+ug_postgresql_enable=False                              # Enable PostgreSQL system startup (True/False)
+
+#
 # Ports
 #
 ug_ftps_port=3321                                       # Secure FTP command port
 ug_ftps_data_port=3320                                  # Secure FTP data port
 ug_ssh_port=3322                                        # Secure Shell port
-ug_db_port=3369                                         # MariaDB Database port
-ug_db_cross_engine_port=3370                            # MariaDB Cross Engine Port
 ug_ocsp_port=3381                                       # OCSP port
+ug_mariadb_port=3369                                    # MariaDB Database port
+ug_mariadb_cross_engine_port=3370                       # MariaDB Cross Engine Port
+ug_postgresql_port=3380                                 # PostgreSQL Database Port
 
 #
 # Hosts

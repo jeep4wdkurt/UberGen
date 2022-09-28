@@ -12,6 +12,7 @@
 #
 #	History:
 #       Date        Version  Author         Desc
+#		2022.09.30  01.05    KurtSchulte    PostgreSQL, module install/enable flags
 #       2022.02.23  01.04    KurtSchulte    Updated logging, bugfixes, migrate folders and other
 #                                             non-user controller constants from BuildVariables
 #                                             to here.
@@ -24,7 +25,7 @@
 #
 # Constants
 #
-UBERGEN_VERSION=01.04
+UBERGEN_VERSION=01.05
 
 k_section_certs="Cert Servers"
 k_section_ssl="SSL Servers"

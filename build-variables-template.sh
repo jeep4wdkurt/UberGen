@@ -8,45 +8,58 @@
 #
 #       Script template to define build variables to drive system generation. 
 #
-#			Replacement Tag					Replace With
-#			-------------------------------	----------------------------
-#			{{hostname}}					System host name
-#			{{domainname}}					System domain name
-#			{{server_desc}}					System description
-#			{{root_password}}				Root password
-#			{{org_country}}					Organization country
-#			{{org_state}}					Organization state
-#			{{org_name}}					Organization name
-#			{{org_abbr}}					Organization abbr
-#			{{org_locality}}				Organization city
-#			{{org_organization}}			Organization sub-organization
-#			{{org_unit}}					Organization unit
-#			{{org_email}}					Organization email
-#			{{client_hostname}}				Cleint workstation hostname
-#			{{client_ip_addr}}				Cleint workstation IPv4 address
-#			{{client_email}}				Cleint workstation system admin email
-#			{{ftps_command_port}}			Secure FTP command port
-#			{{ftps_data_port}}				Secure FTP data port
-#			{{ssh_port}}					Secure Shell (SSH) port
-#			{{mariadb_port}}				MariaDB Database port
-#			{{mariadb_cross_engine_port}}	MariaDB Database Cross-Engine port
-#			{{ocsp_port}}					OCSP port
-#           {{server_abbr}}                 Server abbreviation (used for WP databases and node names)
-#			{{application_root_user}}		WP Application root user (for WP & App installs)
-#			{{application_root_password}}	WP Application root password
-#			{{application_admin_user}}		WP Application administrator user
-#			{{application_admin_password}}	WP Application administrator password
-#			{{application_dev_user}}		WP Application development user
-#			{{application_dev_password}}	WP Application development password
-#			{{application_user}}			Application user
-#			{{application_password}}		Application password
+#			Replacement Tag						Replace With
+#			----------------------------------	----------------------------
+#			{{hostname}}						System host name
+#			{{domainname}}						System domain name
+#			{{server_desc}}						System description
+#           {{server_abbr}}                 	Server abbreviation (used for WP databases and node names)
+#			{{root_password}}					Root password
+#			{{org_country}}						Organization country
+#			{{org_state}}						Organization state
+#			{{org_name}}						Organization name
+#			{{org_abbr}}						Organization abbr
+#			{{org_locality}}					Organization city
+#			{{org_organization}}				Organization sub-organization
+#			{{org_unit}}						Organization unit
+#			{{org_email}}						Organization email
+#			{{mariadb_install}}			    	MariaDB Database Install
+#			{{mariadb_column_store_install}}	MariaDB Column Store Engine Install
+#			{{mariadb_enable}}			    	MariaDB Database Enable system startup
+#			{{mariadb_port}}			    	MariaDB Database port
+#			{{mariadb_cross_engine_port}}   	MariaDB Database Cross Engine port
+#			{{postgresql_install}}				PostgreSQL Database install
+#			{{postgresql_enable}}				PostgreSQL Database enable system startup
+#			{{postgresql_port}}			    	PostgreSQL Database port
+#			{{wordpress_install}}				WordPress install (True/False)
+#			{{wordpress_database}}				WordPress database (mariadb/postgresql)
+#			{{ftps_enable}}						Secure FTP enable system startup (True/False)
+#			{{ftps_command_port}}				Secure FTP command port
+#			{{ftps_data_port}}					Secure FTP data port
+#			{{ssh_enbable}}						Secure Shell (SSH) enable system startup (True/False)
+#			{{ssh_port}}						Secure Shell (SSH) port
+#			{{ocsp_port}}						OCSP port
+#			{{client_hostname}}					Cleint workstation hostname
+#			{{client_ip_addr}}					Cleint workstation IPv4 address
+#			{{client_email}}					Cleint workstation system admin email
+#			{{application_root_user}}			WP Application root user (for WP & App installs)
+#			{{application_root_password}}		WP Application root password
+#			{{application_admin_user}}			WP Application administrator user
+#			{{application_admin_password}}		WP Application administrator password
+#			{{application_dev_user}}			WP Application development user
+#			{{application_dev_password}}		WP Application development password
+#			{{application_user}}				Application user
+#			{{application_password}}			Application password
 #
 #	Copyright:
 #		Copyright (c) 2022, Kurt Schulte - All rights reserved.  No use without written authorization.
 #
 #	History:
 #       Date        Version  Author         Desc
-#       2022.02.24  01.04    KurtSchulte    Original Version
+#       2022.09.28  01.05    KurtSchulte    Add PostgreSQL, db enable/install flags
+#       2022.02.22  01.04    KurtSchulte    Add install status tracking, ColumnStore support, move
+#                                             non-user params to [core-configureation.sh]
+#       2021.01.28  01.03    KurtSchulte    Original Version
 #
 ####################################################################################################
 
@@ -57,7 +70,6 @@ scriptFolder=$(echo "${0%/*}" | sed -e "s~^[.]~`pwd`~")
 ug_verbose=1											# UberGen install log level
 
 ug_apache_log_level='debug'								# Apache log level
-ug_mariadb_column_store_enable=1						# MariaDB ColumnStore install flag
 
 #
 # Server Info
@@ -80,14 +92,33 @@ ug_database_root_name="${ug_server_abbr}"
 ug_server_root_name="${ug_server_abbr}"
 
 #
+# Package Install Control
+#
+ug_mariadb_install={{mariadb_install}}                              # Install MariaDB (True/False)
+ug_mariadb_column_store_install={{mariadb_column_store_install}}    # Install MariaDB Column Store Engine (True/False)
+ug_postgresql_install={{postgresql_install}}                        # Install PostgreSQL (True/False)
+ug_wordpress_install={{wordpress_install}}                          # Install WordPress (True/False)
+ug_wordpress_database={{wordpress_database}}                        # WordPress Database (mariadb/postgresql)
+
+#
+# Package System Startup Control
+#
+ug_ftps_enable={{ftps_enable}}                          # Enable Secure FTP system startup (True/False)
+ug_ssh_enable={{ssh_enbable}}                           # Enable Secure Shell (SSH) system startup (True/False)
+ug_mariadb_enable={{mariadb_enable}}                    # Enable MariaDB system startup (True/False)
+ug_postgresql_enable={{postgresql_enable}}              # Enable PostgreSQL system startup (True/False)
+
+#
 # Ports
 #
 ug_ftps_port={{ftps_command_port}}                      # Secure FTP command port
 ug_ftps_data_port={{ftps_data_port}}                    # Secure FTP data port
 ug_ssh_port={{ssh_port}}                                # Secure Shell (SSH) port
-ug_db_port={{mariadb_port}}                             # MariaDB Database port
-ug_db_cross_engine_port={{mariadb_cross_engine_port}}   # MariaDB Cross Engine Port
 ug_ocsp_port={{ocsp_port}}                              # OCSP port
+
+ug_mariadb_port={{mariadb_port}}                            # MariaDB Database port
+ug_mariadb_cross_engine_port={{mariadb_cross_engine_port}}  # MariaDB Cross Engine Port
+ug_postgresql_port={{postgresql_port}}                      # PostgreSQL Database Port
 
 #
 # Hosts
@@ -120,9 +151,9 @@ ug_server_crl_data="crl;crl;CRL Server;Certificate Revokation List Server;${ug_c
 #
 # Groups
 #
-ug_sysgrp_system="${ug_database_root_name}sys"                      # System level users
-ug_sysgrp_admin="${ug_database_root_name}admins"                    # Administrators and super users
-ug_sysgrp_dev="${ug_database_root_name}dev"                         # Developers
+ug_sysgrp_system="${ug_database_root_name}sys"          # System level users
+ug_sysgrp_admin="${ug_database_root_name}admins"        # Administrators and super users
+ug_sysgrp_dev="${ug_database_root_name}dev"             # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
 
 #
