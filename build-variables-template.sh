@@ -24,7 +24,7 @@
 #			{{org_unit}}						Organization unit
 #			{{org_email}}						Organization email
 #			{{mariadb_install}}			    	MariaDB Database Install
-#			{{mariadb_column_store_install}}	MariaDB Column Store Engine Install
+#			{{mariadb_columnstore_install}}	    MariaDB ColumnStore Engine Install
 #			{{mariadb_enable}}			    	MariaDB Database Enable system startup
 #			{{mariadb_port}}			    	MariaDB Database port
 #			{{mariadb_cross_engine_port}}   	MariaDB Database Cross Engine port
@@ -95,7 +95,7 @@ ug_server_root_name="${ug_server_abbr}"
 # Package Install Control
 #
 ug_mariadb_install={{mariadb_install}}                              # Install MariaDB (True/False)
-ug_mariadb_column_store_install={{mariadb_column_store_install}}    # Install MariaDB Column Store Engine (True/False)
+ug_mariadb_columnstore_install={{mariadb_columnstore_install}}      # Install MariaDB ColumnStore Engine (True/False)
 ug_postgresql_install={{postgresql_install}}                        # Install PostgreSQL (True/False)
 ug_wordpress_install={{wordpress_install}}                          # Install WordPress (True/False)
 ug_wordpress_database={{wordpress_database}}                        # WordPress Database (mariadb/postgresql)
