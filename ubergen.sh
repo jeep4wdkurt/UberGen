@@ -33,8 +33,7 @@
 #			apache-install				Apache2 Web Server
 #			libreoffice-install			Libre Office
 #			eclipse-install				Eclipse Enterprise
-#			wordpress-mariadb-config	WordPress database configuration MariaDB
-#			wordpress-postgres-config	WordPress database configuration PostgreSQL
+#			wordpress-db-config			WordPress database configuration
 #			wordpress-install			WordPress installation
 #
 #   Usage:
@@ -238,8 +237,8 @@ if [ ! $optUnpack ] ; then
 	uberModules="${uberModules},apache-install"					# Apache Web Server install and configure
 	uberModules="${uberModules},libreoffice-install"			# Libre Office install
 	uberModules="${uberModules},eclipse-install"				# Eclipse Enterprise install
-	uberModules="${uberModules},wordpress-mariadb-config"		# Create WordPress database(s) and users
-	uberModules="${uberModules},wordpress-mariadb-config -O"	# Permission WordPress database objects
+	uberModules="${uberModules},wordpress-db-config"			# Create WordPress database(s) and users
+	uberModules="${uberModules},wordpress-db-config -O"			# Permission WordPress database objects
 	uberModules="${uberModules},wordpress-install"				# Install WordPress software
 
 	commandDebugFlags="${verboseFlag} ${debugFlag} ${traceFlag}"

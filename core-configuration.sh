@@ -170,17 +170,24 @@ ServerVarsSet() {
 	[ "${envData}" == "" ] && barfee "Your configuration sucks. No ug_<sysType>_<envId>_data variable declared in BuildVariables for sysType='${sysType}',envId='${envId}'" 
 
 	envServerName=$(Trim $(echo "${envData}" | cut -d ';' -f 1))
-	envServerType=$(Trim $(echo "${envData}" | cut -d ';' -f 2))					; traceVariable envServerType
-	envServerShortDesc=$(Trim $(echo "${envData}" | cut -d ';' -f 3))				; traceVariable envServerShortDesc
-	envServerDesc=$(Trim $(echo "${envData}" | cut -d ';' -f 4))					; traceVariable envServerDesc
-	envFileOwner=$(Trim $(echo "${envData}" | cut -d ';' -f 5))						; traceVariable envFileOwner
-	envFileGroup=$(Trim $(echo "${envData}" | cut -d ';' -f 6))						; traceVariable envFileGroup
-	envFileMask=$(Trim $(echo "${envData}" | cut -d ';' -f 7))						; traceVariable envFileMask
-	envServerIpAddr=$(Trim $(echo "${envData}" | cut -d ';' -f 8))
+	envServerEngine=$(Trim $(echo "${envData}" | cut -d ';' -f 2))					; traceVariable envServerEngine
+	envServerType=$(Trim $(echo "${envData}" | cut -d ';' -f 3))					; traceVariable envServerType
+	envServerShortDesc=$(Trim $(echo "${envData}" | cut -d ';' -f 4))				; traceVariable envServerShortDesc
+	envServerDesc=$(Trim $(echo "${envData}" | cut -d ';' -f 5))					; traceVariable envServerDesc
+	envFileOwner=$(Trim $(echo "${envData}" | cut -d ';' -f 6))						; traceVariable envFileOwner
+	envFileGroup=$(Trim $(echo "${envData}" | cut -d ';' -f 7))						; traceVariable envFileGroup
+	envFileMask=$(Trim $(echo "${envData}" | cut -d ';' -f 8))						; traceVariable envFileMask
+	envServerIpAddr=$(Trim $(echo "${envData}" | cut -d ';' -f 9))
 	[ "${envServerIpAddr}" == "" ] && envServerIpAddr=127.0.0.1						; traceVariable envServerIpAddr
-	envServerDatabase=$(Trim $(echo "${envData}" | cut -d ';' -f 9))				; traceVariable envServerDatabase
-	envServerWebRoot=$(Trim $(echo "${envData}" | cut -d ';' -f 10))				; traceVariable envServerWebRoot
-	envServerEmail=$(Trim $(echo "${envData}" | cut -d ';' -f 11) | sed -e "s~^\$~${ug_org_email}~")	; traceVariable envServerEmail
+	envServerDatabase=$(Trim $(echo "${envData}" | cut -d ';' -f 10))				; traceVariable envServerDatabase
+	envServerWebRoot=$(Trim $(echo "${envData}" | cut -d ';' -f 11))				; traceVariable envServerWebRoot
+	envServerEmail=$(Trim $(echo "${envData}" | cut -d ';' -f 12) | sed -e "s~^\$~${ug_org_email}~")	; traceVariable envServerEmail
+
+	case envServerEngine is
+		"mariadb")					envServerPort=${ug_mariadb_port} ;;
+		"postgresql")				envServerPort=${ug_postgresql_port} ;;
+		*)							barfee "ServerVarsSet.ERROR: Invalid envServerEngine '${envServerEngine}' for envId='${envId}'"
+	esac
 
 	case sectionId in
 		"${k_section_localhost}")	envServerExtDesc="${envServerDesc}" ;;

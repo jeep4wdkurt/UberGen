@@ -110,6 +110,7 @@ ug_sysgrp_system="wcisys"                               # System level users
 ug_sysgrp_admin="wciadmins"                             # Administrators and super users
 ug_sysgrp_dev="wcidev"                                  # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
+ug_sysgrp_db="db-data"									# Database
 
 #
 # Users
@@ -143,6 +144,13 @@ ug_sysuser_sysapp_groups=${ug_sysgrp_web}
 ug_sysuser_sysapp_pass="wci9app"
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
+ug_sysuser_postgresql_name=postgresql
+ug_sysuser_postgresql_desc="PostgreSQL system account"
+ug_sysuser_postgresql_groups="${ug_sysgrp_db}"
+ug_sysuser_postgresql_pass="wciroot"
+ug_sysuser_postgresql_data="${ug_sysuser_postgresql_name};${ug_sysuser_postgresql_desc};${ug_sysuser_postgresql_groups};${ug_sysuser_postgresql_pass}"
+
+
 #
 # Stack Info
 #
@@ -150,11 +158,11 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<engine>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<port>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database};${ug_server_webcore}"
-ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}mod;${ug_server_webcore}mod"
-ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}dev;${ug_server_webcore}dev"
+ug_server_prod_data="${ug_server_name};${ug_wordpress_database};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database};${ug_server_webcore}"
+ug_server_mod_data="mod.${ug_server_name};${ug_wordpress_database};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}mod;${ug_server_webcore}mod"
+ug_server_dev_data="dev.${ug_server_name};${ug_wordpress_database};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}dev;${ug_server_webcore}dev"
 
 #
 # Client Info

@@ -155,6 +155,7 @@ ug_sysgrp_system="${ug_database_root_name}sys"          # System level users
 ug_sysgrp_admin="${ug_database_root_name}admins"        # Administrators and super users
 ug_sysgrp_dev="${ug_database_root_name}dev"             # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
+ug_sysgrp_database="db-data"                            # Database Data
 
 #
 # Users
@@ -189,17 +190,26 @@ ug_sysuser_sysapp_pass="{{application_password}}"
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
 #
+# MariaDB Cross Engine User
+# 
+# ug_sysuser_dbcrosseng_user=dbcrosseng                      # MariaDB Cross-Engine user
+# ug_sysuser_dbcrosseng_desc="MariaDB Cross-Engine User"     # MariaDB Cross-Engine user desc
+# ug_sysuser_dbcrosseng_groups=${ug_sysgrp_database}         # MariaDB Cross-Engine user group
+# ug_sysuser_dbcrosseng_pass="<generate>"                    # MariaDB Cross-Engine password
+# ug_sysuser_dbcrosseng_data="${ug_sysuser_dbcrosseng_user};${ug_sysuser_dbcrosseng_desc};${ug_sysuser_dbcrosseng_groups};${ug_sysuser_dbcrosseng_pass}"
+
+#
 # Stack Info
 #
 ug_stack_regions="prod,mod,dev"                         # Production, Model, and Development regions
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<engine>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name};${ug_server_root_name}"
-ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}mod;${ug_server_root_name}mod"
-ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}dev;${ug_server_root_name}dev"
+ug_server_prod_data="${ug_server_name};${ug_wordpress_database};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name};${ug_server_root_name}"
+ug_server_mod_data="mod.${ug_server_name};${ug_wordpress_database};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}mod;${ug_server_root_name}mod"
+ug_server_dev_data="dev.${ug_server_name};${ug_wordpress_database};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}dev;${ug_server_root_name}dev"
 
 #
 # Client Info
@@ -211,11 +221,6 @@ ug_client_list="workstation1"									# Clients to generate certs for
 #		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>
 ug_client_workstation1_data="{{client_hostname}};client;VM Host;Host Workstation;${ug_sysuser_sysroot_name};${ug_sysgrp_admin};755;{{client_ip_addr}};{{client_email}}"
 
-#
-# Database Cross Engine User (db-only)
-# 
-ug_db_cross_engine_user=dbcrosseng                      # MariaDB Cross-Engine user
-ug_db_cross_engine_pass="<generate>"                    # MariaDB Cross-Engine password
 
 #
 # Database Users (mirrors of system users)
@@ -268,6 +273,15 @@ ug_dbuser_sysapp_pass="${ug_sysuser_sysapp_pass}"
 ug_dbuser_sysapp_region_roles="prod:app,mod:app,dev:app"
 ug_dbuser_sysapp_hosts="localhost,%.${ug_server_domain}"
 ug_dbuser_sysapp_data="${ug_dbuser_sysapp_name};${ug_dbuser_sysapp_pass};${ug_dbuser_sysapp_region_roles};${ug_dbuser_sysapp_hosts}"
+
+# MariaDB Cross Engine User
+ug_dbuser_dbcrosseng_user=dbcrosseng                            # MariaDB Cross-Engine user
+ug_dbuser_dbcrosseng_pass="<generate>"                          # MariaDB Cross-Engine password
+ug_dbuser_dbcrosseng_desc="MariaDB Cross-Engine User"           # MariaDB Cross-Engine user desc
+ug_dbuser_dbcrosseng_region_roles="prod:sys,mod:sys,dev:sys"    # MariaDB Cross-Engine user group
+ug_dbuser_dbcrosseng_hosts="MariaDB Cross-Engine User"          # MariaDB Cross-Engine user hosts
+ug_dbuser_dbcrosseng_data="${ug_dbuser_dbcrosseng_user};${ug_dbuser_dbcrosseng_pass};${ug_dbuser_dbcrosseng_region_roles};${ug_dbuser_dbcrosseng_hosts}"
+
 
 # Database Roles
 #
