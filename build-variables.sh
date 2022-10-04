@@ -158,7 +158,7 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<engine>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ipaddr>;<engine>;<dbname>;<webcore>
 #
 ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_server_database};${ug_server_webcore}"
 ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_server_database}mod;${ug_server_webcore}mod"
@@ -171,7 +171,7 @@ ug_client_list="animal"									# Clients to generate certs for
 
 # Client data
 #	Client data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ipaddr>
 ug_client_animal_data="animal;client;Animal;Animal Workstation;${ug_sysuser_sysroot_name};${ug_sysgrp_admin};755;127.0.0.1"
 
 #

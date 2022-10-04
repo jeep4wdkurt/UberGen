@@ -40,7 +40,7 @@
 #			{{ssh_port}}						Secure Shell (SSH) port
 #			{{ocsp_port}}						OCSP port
 #			{{client_hostname}}					Cleint workstation hostname
-#			{{client_ip_addr}}					Cleint workstation IPv4 address
+#			{{client_ipaddr}}					Cleint workstation IPv4 address
 #			{{client_email}}					Cleint workstation system admin email
 #			{{application_root_user}}			WP Application root user (for WP & App installs)
 #			{{application_root_password}}		WP Application root password
@@ -205,7 +205,7 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbengine>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ipaddr>;<dbengine>;<dbname>;<webcore>
 #
 ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_database_root_name};${ug_server_root_name}"
 ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_database_root_name}mod;${ug_server_root_name}mod"
@@ -218,8 +218,8 @@ ug_client_list="workstation1"									# Clients to generate certs for
 
 # Client data
 #	Client data format:
-#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>
-ug_client_workstation1_data="{{client_hostname}};client;VM Host;Host Workstation;${ug_sysuser_sysroot_name};${ug_sysgrp_admin};755;{{client_ip_addr}};{{client_email}}"
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ipaddr>
+ug_client_workstation1_data="{{client_hostname}};client;VM Host;Host Workstation;${ug_sysuser_sysroot_name};${ug_sysgrp_admin};755;{{client_ipaddr}};{{client_email}}"
 
 
 #
