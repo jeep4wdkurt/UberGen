@@ -54,7 +54,7 @@ ug_mariadb_install=True                                 # Install MariaDB (True/
 ug_mariadb_column_store_install=True                    # Install MariaDB Column Store Engine (True/False)
 ug_postgresql_install=True                              # Install PostgreSQL (True/False)
 ug_wordpress_install=True                               # Install WordPress (True/False)
-ug_wordpress_database=mariadb                           # WordPress Database (mariadb/postgresql)
+ug_wordpress_engine=mariadb                             # WordPress Database Engine (mariadb/postgresql)
 
 #
 # Package System Startup Control
@@ -158,11 +158,11 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<engine>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<port>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<engine>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};${ug_wordpress_database};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database};${ug_server_webcore}"
-ug_server_mod_data="mod.${ug_server_name};${ug_wordpress_database};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}mod;${ug_server_webcore}mod"
-ug_server_dev_data="dev.${ug_server_name};${ug_wordpress_database};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_server_database}dev;${ug_server_webcore}dev"
+ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database};${ug_server_webcore}"
+ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database}mod;${ug_server_webcore}mod"
+ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database}dev;${ug_server_webcore}dev"
 
 #
 # Client Info

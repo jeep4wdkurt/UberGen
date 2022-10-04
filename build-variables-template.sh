@@ -98,7 +98,7 @@ ug_mariadb_install={{mariadb_install}}                              # Install Ma
 ug_mariadb_columnstore_install={{mariadb_columnstore_install}}      # Install MariaDB ColumnStore Engine (True/False)
 ug_postgresql_install={{postgresql_install}}                        # Install PostgreSQL (True/False)
 ug_wordpress_install={{wordpress_install}}                          # Install WordPress (True/False)
-ug_wordpress_database={{wordpress_database}}                        # WordPress Database (mariadb/postgresql)
+ug_wordpress_engine={{wordpress_database}}                          # WordPress Database Engine (mariadb/postgresql)
 
 #
 # Package System Startup Control
@@ -141,7 +141,7 @@ ug_cert_int_pass_phrase='Y4bbaD4bbaD00#K00K00K4ch00!'   # Intermediate CA Cert p
 ug_cert_ocsp_pass_phrase=""                             # OCSP Cert pass phrase (blank for none)
 
 #
-# SSL Servers <node>;<type>;<shortdesc>;<desc>;<owner>;<group>;<prot>;<ipaddr>
+# SSL Servers <node>;<type>;<shortdesc>;<desc>;<owner>;<group>;<prot>;<ipaddr>;<dbengine>
 #
 ug_server_ca_data="ca;root;Root CA;Root Certificate Authority;${ug_certs_owner};${ug_certs_group};755;127.0.0.1"
 ug_server_ica_data="ica;sign;Intermediate CA;Intermediate Certificate Authority;${ug_certs_owner};${ug_certs_group};755;127.0.0.1"
@@ -205,11 +205,11 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 
 # Server data
 #	Server data format:
-#		ug_server_<env>_data = <hostname>;<engine>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbname>;<webcore>
+#		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbengine>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};${ug_wordpress_database};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name};${ug_server_root_name}"
-ug_server_mod_data="mod.${ug_server_name};${ug_wordpress_database};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}mod;${ug_server_root_name}mod"
-ug_server_dev_data="dev.${ug_server_name};${ug_wordpress_database};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_database_root_name}dev;${ug_server_root_name}dev"
+ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name};${ug_server_root_name}"
+ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name}mod;${ug_server_root_name}mod"
+ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name}dev;${ug_server_root_name}dev"
 
 #
 # Client Info
