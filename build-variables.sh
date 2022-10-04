@@ -51,7 +51,7 @@ ug_org_abbr="widget"
 # Package Install Control
 #
 ug_mariadb_install=True                                 # Install MariaDB (True/False)
-ug_mariadb_column_store_install=True                    # Install MariaDB Column Store Engine (True/False)
+ug_mariadb_columnstore_install=True                     # Install MariaDB Column Store Engine (True/False)
 ug_postgresql_install=True                              # Install PostgreSQL (True/False)
 ug_wordpress_install=True                               # Install WordPress (True/False)
 ug_wordpress_engine=mariadb                             # WordPress Database Engine (mariadb/postgresql)
