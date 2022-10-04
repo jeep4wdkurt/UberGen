@@ -160,9 +160,9 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 #	Server data format:
 #		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<engine>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database};${ug_server_webcore}"
-ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database}mod;${ug_server_webcore}mod"
-ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_server_database}dev;${ug_server_webcore}dev"
+ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_server_database};${ug_server_webcore}"
+ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_server_database}mod;${ug_server_webcore}mod"
+ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_server_database}dev;${ug_server_webcore}dev"
 
 #
 # Client Info

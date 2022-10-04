@@ -32,7 +32,7 @@
 #			{{postgresql_enable}}				PostgreSQL Database enable system startup
 #			{{postgresql_port}}			    	PostgreSQL Database port
 #			{{wordpress_install}}				WordPress install (True/False)
-#			{{wordpress_database}}				WordPress database (mariadb/postgresql)
+#			{{wordpress_engine}}				WordPress database (mariadb/postgresql)
 #			{{ftps_enable}}						Secure FTP enable system startup (True/False)
 #			{{ftps_command_port}}				Secure FTP command port
 #			{{ftps_data_port}}					Secure FTP data port
@@ -98,7 +98,7 @@ ug_mariadb_install={{mariadb_install}}                              # Install Ma
 ug_mariadb_columnstore_install={{mariadb_columnstore_install}}      # Install MariaDB ColumnStore Engine (True/False)
 ug_postgresql_install={{postgresql_install}}                        # Install PostgreSQL (True/False)
 ug_wordpress_install={{wordpress_install}}                          # Install WordPress (True/False)
-ug_wordpress_engine={{wordpress_database}}                          # WordPress Database Engine (mariadb/postgresql)
+ug_wordpress_engine={{wordpress_engine}}                          # WordPress Database Engine (mariadb/postgresql)
 
 #
 # Package System Startup Control
@@ -207,9 +207,9 @@ ug_stack_regions="prod,mod,dev"                         # Production, Model, and
 #	Server data format:
 #		ug_server_<env>_data = <hostname>;<type>;<short_desc>;<desc>;<owner_user>;<owner_group>;<prot_mask>;<ip_addr>;<dbengine>;<dbname>;<webcore>
 #
-ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name};${ug_server_root_name}"
-ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name}mod;${ug_server_root_name}mod"
-ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_database};${ug_database_root_name}dev;${ug_server_root_name}dev"
+ug_server_prod_data="${ug_server_name};app;Production;Production Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_database_root_name};${ug_server_root_name}"
+ug_server_mod_data="mod.${ug_server_name};app;Model;Model Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_database_root_name}mod;${ug_server_root_name}mod"
+ug_server_dev_data="dev.${ug_server_name};app;Development;Development Server;${ug_sysuser_sysroot_name};${ug_sysgrp_web};755;127.0.0.1;${ug_wordpress_engine};${ug_database_root_name}dev;${ug_server_root_name}dev"
 
 #
 # Client Info
