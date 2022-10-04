@@ -183,7 +183,7 @@ ServerVarsSet() {
 	envServerWebRoot=$(Trim $(echo "${envData}" | cut -d ';' -f 11))				; traceVariable envServerWebRoot
 	envServerEmail=$(Trim $(echo "${envData}" | cut -d ';' -f 12) | sed -e "s~^\$~${ug_org_email}~")	; traceVariable envServerEmail
 
-	case envServerEngine is
+	case envServerEngine in
 		"mariadb")					envServerPort=${ug_mariadb_port} ;;
 		"postgresql")				envServerPort=${ug_postgresql_port} ;;
 		*)							barfee "ServerVarsSet.ERROR: Invalid envServerEngine '${envServerEngine}' for envId='${envId}'"
