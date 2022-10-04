@@ -78,7 +78,7 @@ ug_postgresql_port=3380                                 # PostgreSQL Database Po
 #
 # Hosts
 #
-ug_db_cross_engine_host=127.0.0.1                       #  MariaDB Cross Engine Host
+ug_mariadb_cross_engine_host=127.0.0.1                  #  MariaDB Cross Engine Host
 
 #
 # SSL
