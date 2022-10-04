@@ -32,6 +32,7 @@ k_section_ssl="SSL Servers"
 k_section_web="Web Servers"
 k_section_wordpress="WordPress Hosts"
 k_section_localhost="Local Host"
+k_section_clients="Client Systems"
 
 #
 # Filesystem Permissions
