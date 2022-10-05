@@ -163,36 +163,37 @@ ug_sysgrp_database="db-data"                            # Database Data
 #		ug_sysuser_<userid>_data = "<username>:<userdesc>:<usergroups>:<userpass>"
 #		<usergroups> is a comma separated list
 #
+ug_password_level=3                                     # Password level (1=Easy,2=Hard,3=Difficult)
 ug_sysuser_list=sysroot,sysadmin,sysdev1,sysapp
 
 ug_sysuser_sysroot_name="{{application_root_user}}"
 ug_sysuser_sysroot_desc="{{server_desc}} Application Root"
 ug_sysuser_sysroot_groups=${ug_sysgrp_system}:${ug_sysgrp_admin}:${ug_sysgrp_dev}:${ug_sysgrp_web}:SYSTEM:SUDO
-ug_sysuser_sysroot_pass="{{application_root_password}}"
+ug_sysuser_sysroot_pass='{{application_root_password}}'
 ug_sysuser_sysroot_data="${ug_sysuser_sysroot_name};${ug_sysuser_sysroot_desc};${ug_sysuser_sysroot_groups};${ug_sysuser_sysroot_pass}"
 
 ug_sysuser_sysadmin_name="{{application_admin_user}}"
 ug_sysuser_sysadmin_desc="{{server_desc}} Application Administrator"
 ug_sysuser_sysadmin_groups=${ug_sysgrp_admin}:${ug_sysgrp_web}
-ug_sysuser_sysadmin_pass="{{application_admin_password}}"
+ug_sysuser_sysadmin_pass='{{application_admin_password}}'
 ug_sysuser_sysadmin_data="${ug_sysuser_sysadmin_name};${ug_sysuser_sysadmin_desc};${ug_sysuser_sysadmin_groups};${ug_sysuser_sysadmin_pass}"
 
 ug_sysuser_sysdev1_name="{{application_dev_user}}"
 ug_sysuser_sysdev1_desc="{{server_desc}} Development"
 ug_sysuser_sysdev1_groups=${ug_sysgrp_dev}:${ug_sysgrp_web}
-ug_sysuser_sysdev1_pass="{{application_dev_password}}"
+ug_sysuser_sysdev1_pass='{{application_dev_password}}'
 ug_sysuser_sysdev1_data="${ug_sysuser_sysdev1_name};${ug_sysuser_sysdev1_desc};${ug_sysuser_sysdev1_groups};${ug_sysuser_sysdev1_pass}"
 
 ug_sysuser_sysapp_name="{{application_user}}"
 ug_sysuser_sysapp_desc="{{server_desc}} Application"
 ug_sysuser_sysapp_groups=${ug_sysgrp_web}
-ug_sysuser_sysapp_pass="{{application_password}}"
+ug_sysuser_sysapp_pass='{{application_password}}'
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
 ug_sysuser_postgresql_name={{postgresql_user}}
 ug_sysuser_postgresql_desc="PostgreSQL system account"
 ug_sysuser_postgresql_groups="${ug_sysgrp_db}"
-ug_sysuser_postgresql_pass="{{postgresql_password}}"
+ug_sysuser_postgresql_pass='{{postgresql_password}}'
 ug_sysuser_postgresql_data="${ug_sysuser_postgresql_name};${ug_sysuser_postgresql_desc};${ug_sysuser_postgresql_groups};${ug_sysuser_postgresql_pass}"
 
 #

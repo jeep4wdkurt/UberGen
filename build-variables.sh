@@ -118,6 +118,8 @@ ug_sysgrp_db="db-data"									# Database
 #		ug_sysuser_<userid>_data = "<username>:<userdesc>:<usergroups>:<userpass>"
 #		<usergroups> is a comma separated list
 #
+ug_password_level=3                                     # Password level (1=Easy,2=Hard,3=Difficult)
+
 ug_sysuser_list=sysroot,sysadmin,sysdev1,sysapp
 
 ug_sysuser_sysroot_name=wciroot
@@ -149,7 +151,6 @@ ug_sysuser_postgresql_desc="PostgreSQL system account"
 ug_sysuser_postgresql_groups="${ug_sysgrp_db}"
 ug_sysuser_postgresql_pass="wciroot"
 ug_sysuser_postgresql_data="${ug_sysuser_postgresql_name};${ug_sysuser_postgresql_desc};${ug_sysuser_postgresql_groups};${ug_sysuser_postgresql_pass}"
-
 
 #
 # Stack Info
