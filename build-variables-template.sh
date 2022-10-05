@@ -31,6 +31,8 @@
 #			{{postgresql_install}}				PostgreSQL Database install
 #			{{postgresql_enable}}				PostgreSQL Database enable system startup
 #			{{postgresql_port}}			    	PostgreSQL Database port
+#			{{postgresql_user}}			    	PostgreSQL Database daemon user
+#			{{postgresql_password}}			    PostgreSQL Database daemon password
 #			{{wordpress_install}}				WordPress install (True/False)
 #			{{wordpress_engine}}				WordPress database (mariadb/postgresql)
 #			{{ftps_enable}}						Secure FTP enable system startup (True/False)
@@ -42,6 +44,7 @@
 #			{{client_hostname}}					Cleint workstation hostname
 #			{{client_ipaddr}}					Cleint workstation IPv4 address
 #			{{client_email}}					Cleint workstation system admin email
+#           {{password_level}}                  Password generation level (1=Easy,2=Hard,3=Difficult)
 #			{{application_root_user}}			WP Application root user (for WP & App installs)
 #			{{application_root_password}}		WP Application root password
 #			{{application_admin_user}}			WP Application administrator user
@@ -163,7 +166,7 @@ ug_sysgrp_database="db-data"                            # Database Data
 #		ug_sysuser_<userid>_data = "<username>:<userdesc>:<usergroups>:<userpass>"
 #		<usergroups> is a comma separated list
 #
-ug_password_level=3                                     # Password level (1=Easy,2=Hard,3=Difficult)
+ug_password_level={{password_level}}                    # Password level (1=Easy,2=Hard,3=Difficult)
 ug_sysuser_list=sysroot,sysadmin,sysdev1,sysapp
 
 ug_sysuser_sysroot_name="{{application_root_user}}"
