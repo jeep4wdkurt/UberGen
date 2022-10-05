@@ -71,6 +71,8 @@ ug_mysqlwb_apt_kit_uri="https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.
 ug_mysqlwb_apt_kit_checksum="ade43b291d4b8db2a00e292de7307745"
 ug_mysql_apt_sources_file="/etc/apt/sources.list.d/mysql.list"
 
+ug_dictionary="${scriptFolder}/english-words.txt"
+
 #echo "DEBUG: ug_mariadb_install_script='${ug_mariadb_install_script}'"
 
 
