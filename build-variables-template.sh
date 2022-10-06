@@ -193,11 +193,11 @@ ug_sysuser_sysapp_groups=${ug_sysgrp_web}
 ug_sysuser_sysapp_pass='{{application_password}}'
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
-ug_sysuser_postgresql_name={{postgresql_user}}
-ug_sysuser_postgresql_desc="PostgreSQL system account"
-ug_sysuser_postgresql_groups="${ug_sysgrp_db}"
-ug_sysuser_postgresql_pass='{{postgresql_password}}'
-ug_sysuser_postgresql_data="${ug_sysuser_postgresql_name};${ug_sysuser_postgresql_desc};${ug_sysuser_postgresql_groups};${ug_sysuser_postgresql_pass}"
+ug_sysuser_postgresys_name={{postgresql_user}}
+ug_sysuser_postgresys_desc="PostgreSQL system account"
+ug_sysuser_postgresys_groups="${ug_sysgrp_db}"
+ug_sysuser_postgresys_pass='{{postgresql_password}}'
+ug_sysuser_postgresys_data="${ug_sysuser_postgresys_name};${ug_sysuser_postgresys_desc};${ug_sysuser_postgresys_groups};${ug_sysuser_postgresys_pass}"
 
 #
 # MariaDB Cross Engine User

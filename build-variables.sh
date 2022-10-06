@@ -146,11 +146,11 @@ ug_sysuser_sysapp_groups=${ug_sysgrp_web}
 ug_sysuser_sysapp_pass="wci9app"
 ug_sysuser_sysapp_data="${ug_sysuser_sysapp_name};${ug_sysuser_sysapp_desc};${ug_sysuser_sysapp_groups};${ug_sysuser_sysapp_pass}"
 
-ug_sysuser_postgresql_name=postgresql
-ug_sysuser_postgresql_desc="PostgreSQL system account"
-ug_sysuser_postgresql_groups="${ug_sysgrp_db}"
-ug_sysuser_postgresql_pass="wciroot"
-ug_sysuser_postgresql_data="${ug_sysuser_postgresql_name};${ug_sysuser_postgresql_desc};${ug_sysuser_postgresql_groups};${ug_sysuser_postgresql_pass}"
+ug_sysuser_postgresys_name=${ug_sysuser_sysroot_name}
+ug_sysuser_postgresys_desc="PostgreSQL system account"
+ug_sysuser_postgresys_groups="${ug_sysgrp_db}"
+ug_sysuser_postgresys_pass="${ug_sysuser_sysroot_pass}"
+ug_sysuser_postgresys_data="${ug_sysuser_postgresys_name};${ug_sysuser_postgresys_desc};${ug_sysuser_postgresys_groups};${ug_sysuser_postgresys_pass}"
 
 #
 # Stack Info
