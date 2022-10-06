@@ -158,7 +158,7 @@ ug_sysgrp_system="${ug_database_root_name}sys"          # System level users
 ug_sysgrp_admin="${ug_database_root_name}admins"        # Administrators and super users
 ug_sysgrp_dev="${ug_database_root_name}dev"             # Developers
 ug_sysgrp_web="www-data"                                # Web Applications
-ug_sysgrp_database="db-data"                            # Database Data
+ug_sysgrp_db="db-data"        		                    # Database Data
 
 #
 # Users
@@ -202,10 +202,10 @@ ug_sysuser_postgresys_data="${ug_sysuser_postgresys_name};${ug_sysuser_postgresy
 #
 # MariaDB Cross Engine User
 # 
-# ug_sysuser_dbcrosseng_user=dbcrosseng                      # MariaDB Cross-Engine user
-# ug_sysuser_dbcrosseng_desc="MariaDB Cross-Engine User"     # MariaDB Cross-Engine user desc
-# ug_sysuser_dbcrosseng_groups=${ug_sysgrp_database}         # MariaDB Cross-Engine user group
-# ug_sysuser_dbcrosseng_pass="<generate>"                    # MariaDB Cross-Engine password
+# ug_sysuser_dbcrosseng_user=dbcrosseng                     # MariaDB Cross-Engine user
+# ug_sysuser_dbcrosseng_desc="MariaDB Cross-Engine User"    # MariaDB Cross-Engine user desc
+# ug_sysuser_dbcrosseng_groups=${ug_sysgrp_db}         		# MariaDB Cross-Engine user group
+# ug_sysuser_dbcrosseng_pass="<generate>"                   # MariaDB Cross-Engine password
 # ug_sysuser_dbcrosseng_data="${ug_sysuser_dbcrosseng_user};${ug_sysuser_dbcrosseng_desc};${ug_sysuser_dbcrosseng_groups};${ug_sysuser_dbcrosseng_pass}"
 
 #
