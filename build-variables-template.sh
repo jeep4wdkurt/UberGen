@@ -254,7 +254,7 @@ if [ $ug_db_root_remote ] ; then
 	ug_dbuser_list="${ug_dbuser_list},root"
 fi
 ug_dbuser_root_region_roles="prod:sys,mod:sys,dev:sys"
-ug_dbuser_root_data="root;${ug_dbuser_root_pass};${ug_dbuser_root_region_roles};${ug_dbuser_root_hosts}"
+ug_dbuser_root_data="${ug_dbuser_root_name};${ug_dbuser_root_pass};${ug_dbuser_root_region_roles};${ug_dbuser_root_hosts}"
 
 # database wci application root
 ug_dbuser_sysroot_name="${ug_sysuser_sysroot_name}"
