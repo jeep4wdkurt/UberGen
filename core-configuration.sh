@@ -39,7 +39,10 @@ k_section_clients="Client Systems"
 #
 PERM_FILE_WORLD_READONLY=744                            # File world read only access
 PERM_FILE_WORLD_READ_EXECUTE=755                        # File world read and execute access
+PERM_FILE_OWNER_READ_ONLY=440                           # File onwer and group read only access
+PERM_FILE_OWNER_READ_WRITE=550                          # File onwer and group read/write access
 PERM_FOLDER_WORLD_READONLY=755                          # Folder world read and traverse access
+PERM_FOLDER_WORLD_NOACCESS=750                          # Folder world no access
 
 #
 # Folders		(spec,prot,desc,init,owner,group)
@@ -51,6 +54,7 @@ ug_kits_root="/var/kits,${PERM_FOLDER_WORLD_READONLY},Install Kits,,root,root"  
 ug_web_root=/var/www                                    # Web Data root folder
 ug_ssl_root=/etc/ssl                                    # SSL Configuration root folder
 ug_certs_root=/opt/ca                                   # Certificates Data Root Folder
+ug_template_folder="${scriptFolder}/template"           # Templates folder
 ug_temp_folder="${HOME}/temp,${PERM_FOLDER_WORLD_READONLY},  User temporary data,"					# Scratch files folder
 ug_user_local_folder="${HOME}/ubergen,${PERM_FOLDER_WORLD_READONLY},  UberGen local user data,"		# UberGen local user data folder
 #ug_user_shared_folder="/usr/share/ubergen,${PERM_FOLDER_WORLD_READONLY},UberGen shared user,"		# UberGen shared user data folder
