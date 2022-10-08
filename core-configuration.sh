@@ -39,8 +39,10 @@ k_section_clients="Client Systems"
 #
 PERM_FILE_WORLD_READONLY=744                            # File world read only access
 PERM_FILE_WORLD_READ_EXECUTE=755                        # File world read and execute access
-PERM_FILE_OWNER_READ_ONLY=440                           # File onwer and group read only access
-PERM_FILE_OWNER_READ_WRITE=550                          # File onwer and group read/write access
+PERM_FILE_GROUP_READ_ONLY=440                           # File onwer and group read only access
+PERM_FILE_GROUP_READ_WRITE=660                          # File onwer and group read/write access
+PERM_FILE_OWNER_READ_ONLY=400                           # File onwer read only access
+PERM_FILE_OWNER_READ_WRITE=600                          # File onwer read/write access
 PERM_FOLDER_WORLD_READONLY=755                          # Folder world read and traverse access
 PERM_FOLDER_WORLD_NOACCESS=750                          # Folder world no access
 
