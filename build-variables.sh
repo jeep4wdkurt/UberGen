@@ -55,6 +55,8 @@ ug_mariadb_columnstore_install=True                     # Install MariaDB Column
 ug_postgresql_install=True                              # Install PostgreSQL (True/False)
 ug_wordpress_install=True                               # Install WordPress (True/False)
 ug_wordpress_engine=mariadb                             # WordPress Database Engine (mariadb/postgresql)
+ug_java_jre_install=True                                # Install Java JRE
+ug_java_jdk_install=True                                # Install Java JDK
 
 #
 # Package System Startup Control

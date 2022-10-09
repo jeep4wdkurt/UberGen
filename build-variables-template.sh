@@ -101,7 +101,7 @@ ug_mariadb_install={{mariadb_install}}                              # Install Ma
 ug_mariadb_columnstore_install={{mariadb_columnstore_install}}      # Install MariaDB ColumnStore Engine (True/False)
 ug_postgresql_install={{postgresql_install}}                        # Install PostgreSQL (True/False)
 ug_wordpress_install={{wordpress_install}}                          # Install WordPress (True/False)
-ug_wordpress_engine={{wordpress_engine}}                          # WordPress Database Engine (mariadb/postgresql)
+ug_wordpress_engine={{wordpress_engine}}                            # WordPress Database Engine (mariadb/postgresql)
 
 #
 # Package System Startup Control
