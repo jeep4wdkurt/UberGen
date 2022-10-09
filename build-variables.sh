@@ -75,7 +75,9 @@ ug_ssh_port=3322                                        # Secure Shell port
 ug_ocsp_port=3381                                       # OCSP port
 ug_mariadb_port=3369                                    # MariaDB Database port
 ug_mariadb_cross_engine_port=3370                       # MariaDB Cross Engine Port
-ug_postgresql_port=3380                                 # PostgreSQL Database Port
+ug_postgresql_port=3380                                 # PostgreSQL Database Port 
+[ "${ug_wordpress_engine}" == "mariadb" ]    && ug_wordpress_db_port=$ug_mariadb_port
+[ "${ug_wordpress_engine}" == "postgresql" ] && ug_wordpress_db_port=$ug_postgresql_port
 
 #
 # Hosts
